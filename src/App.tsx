@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Search from './components/Search/Search';
+import DogList from './components/DogList/DogList';
+import DogCard from './components/DogCard/DogCard';
+import Favorites from './components/Favorites/Favorites';
+import Match from './components/Match/Match';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Login />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/dogs' element={<DogList />} />
+        <Route path='/dogs/:id' element={<DogCard />} />
+        <Route path='/favorites' element={<Favorites />} />
+        <Route path='/match' element={<Match />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 // Define the Dog interface
-interface Dog {
+export interface Dog {
   id: string;
   img: string;
   name: string;
@@ -14,6 +14,13 @@ interface Dog {
 interface LoginData {
   name: string;
   email: string;
+}
+
+// Define the QueryParams interface
+interface QueryParams {
+  size: number;
+  sort: string;
+  page?: number;
 }
 
 const baseURL = 'https://frontend-take-home-service.fetch.com';
@@ -33,9 +40,18 @@ const APIService = {
     }
   },
 
-  // getDogs: (): Promise<AxiosResponse<Dog[]>> => {
-  //   return axios.get('/ogs/search', { withCredentials: true });
-  // },
+  getDogs: async (params: QueryParams): Promise<AxiosResponse<Dog[]>> => {
+    try {
+      const response = await axios.get(`${baseURL}/dogs/search`, {
+        params,
+        withCredentials: true,
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
 
 export default APIService;

@@ -19,6 +19,7 @@ const Login = () => {
       navigate('/search');
     } catch (err) {
       setError('An error occurred during login. Please try again.');
+      console.error('Login Failed:', err);
     }
   };
 
@@ -45,6 +46,7 @@ const Login = () => {
         />
       </label>
       <button type='submit'>Login</button>
+      {error && <p>{error}</p>}
     </form>
   );
 };

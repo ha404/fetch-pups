@@ -60,15 +60,17 @@ const APIService = {
     }
   },
 
-  getDogs: async (dogsIds: string[]): Promise<AxiosResponse<Dog[]>> => {
+  getDogs: async (data: string[]): Promise<AxiosResponse<Dog[]>> => {
     try {
-      const response = await axios.post(
-        `${baseURL}/dogs`,
-        { dogsIds },
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(`${baseURL}/dogs`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
+
+      console.log('getDogs status:', response.status); // log status
+
       return response;
     } catch (error) {
       console.log(error);

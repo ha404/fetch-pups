@@ -16,17 +16,14 @@ const Search: React.FC = () => {
 
   const fetchDogs = async () => {
     try {
-      // For now, fetch a default list of 25 dogs, sorted by breed in ascending order
-      const { data } = await APIService.getDogsIds({
+      const responseIds = await APIService.getDogsIds({
         size: 25,
         sort: 'breed:asc',
         page: page,
       });
+      setDogsIds(responseIds.data.resultIds);
 
-      setDogsIds(data.resultIds);
-
-      const response = await APIService.getDogs(data.resultIds);
-
+      const response = await APIService.getDogs(responseIds.data.resultIds);
       setDogs(response.data);
     } catch (err) {
       setError('An error occurred while fetching dogs.');
@@ -47,10 +44,7 @@ const Search: React.FC = () => {
   return (
     <div>
       {error && <p>{error}</p>}
-      {dogsIds && <p>{dogsIds}</p>}
-      {/* {dogs.map((dog: Dog) => (
-        <DogCard key={dog.id} dog={dog} />
-      ))} */}
+      {dogs && dogs.map((dog: Dog) => <DogCard key={dog.id} dog={dog} />)}
       <button onClick={handlePreviousPage}>Previous Page</button>
       <button onClick={handleNextPage}>Next Page</button>
     </div>

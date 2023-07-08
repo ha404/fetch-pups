@@ -16,15 +16,26 @@ interface LoginData {
   email: string;
 }
 
+const baseURL = 'https://frontend-take-home-service.fetch.com';
+
 // Define the API service
 const APIService = {
-  authenticate: (data: LoginData): Promise<AxiosResponse<any>> => {
-    return axios.post('/auth/login', data, { withCredentials: true });
+  authenticate: async (data: LoginData): Promise<AxiosResponse<any>> => {
+    try {
+      const response = await axios.post(`${baseURL}/auth/login`, data, {
+        withCredentials: true,
+      });
+      console.log('Response: ', response);
+      return response;
+    } catch (error) {
+      console.error('An error occurred while making the request: ', error);
+      throw error;
+    }
   },
 
-  getDogs: (): Promise<AxiosResponse<Dog[]>> => {
-    return axios.get('/dogs/search', { withCredentials: true });
-  },
+  // getDogs: (): Promise<AxiosResponse<Dog[]>> => {
+  //   return axios.get('/ogs/search', { withCredentials: true });
+  // },
 };
 
 export default APIService;

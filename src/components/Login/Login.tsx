@@ -1,21 +1,22 @@
 // inside Login.tsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import APIService from '../../services/api';
 
 const Login = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(`Name: ${name}, Email: ${email}`);
     // Perform login action here
     try {
-      const response = await APIService.authenticate({ name, email });
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-      // Redirect the user to the home page or dashboard
+      await APIService.authenticate({ name, email });
+      // Redirect the user to the search page
+      navigate('/search');
     } catch (err) {
       setError('An error occurred during login. Please try again.');
     }

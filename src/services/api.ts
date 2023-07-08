@@ -23,6 +23,13 @@ interface QueryParams {
   page?: number;
 }
 
+// Define the Search interface
+interface Search {
+  next: string;
+  resultIds: string[];
+  total: number;
+}
+
 const baseURL = 'https://frontend-take-home-service.fetch.com';
 
 // Define the API service
@@ -40,12 +47,28 @@ const APIService = {
     }
   },
 
-  getDogs: async (params: QueryParams): Promise<AxiosResponse<Dog[]>> => {
+  getDogsIds: async (params: QueryParams): Promise<AxiosResponse<Search>> => {
     try {
       const response = await axios.get(`${baseURL}/dogs/search`, {
         params,
         withCredentials: true,
       });
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  getDogs: async (dogsIds: string[]): Promise<AxiosResponse<Dog[]>> => {
+    try {
+      const response = await axios.post(
+        `${baseURL}/dogs`,
+        { dogsIds },
+        {
+          withCredentials: true,
+        }
+      );
       return response;
     } catch (error) {
       console.log(error);

@@ -1,6 +1,7 @@
-// Inside DogCard.tsx
+// DogCar.tsx
 import React from 'react';
 import { Dog } from '../../services/api';
+import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 
 interface DogCardProps {
   dog: Dog;
@@ -8,12 +9,20 @@ interface DogCardProps {
 
 const DogCard: React.FC<DogCardProps> = ({ dog }) => {
   return (
-    <div>
-      <img src={dog.img} alt={dog.name} />
-      <h2>{dog.name}</h2>
-      <p>{dog.breed}</p>
-      <p>{dog.age} years old</p>
-    </div>
+    <Card>
+      <CardMedia component='img' height='250' image={dog.img} alt={dog.name} />
+      <CardContent>
+        <Typography gutterBottom variant='h5' component='div'>
+          {dog.name}
+        </Typography>
+        <Typography variant='body2' color='text.secondary'>
+          {dog.breed}
+        </Typography>
+        <Typography variant='body2' color='text.secondary'>
+          {dog.age} years old
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 

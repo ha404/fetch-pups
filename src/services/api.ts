@@ -20,7 +20,8 @@ interface LoginData {
 interface QueryParams {
   size: number;
   sort: string;
-  page?: number;
+  from?: number;
+  next?: string;
 }
 
 // Define the Search interface

@@ -1,8 +1,10 @@
-// Inside Search.tsx
 import React, { useEffect, useState } from 'react';
 import DogCard from '../DogCard/DogCard';
 import APIService from '../../services/api';
 import { Dog } from '../../services/api';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 const Search: React.FC = () => {
   const [dogsIds, setDogsIds] = useState<string[]>([]);
@@ -17,9 +19,9 @@ const Search: React.FC = () => {
   const fetchDogs = async () => {
     try {
       const responseIds = await APIService.getDogsIds({
-        size: 25,
+        size: 12,
         sort: 'breed:asc',
-        page: page,
+        from: 0,
       });
       setDogsIds(responseIds.data.resultIds);
 
@@ -42,12 +44,23 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div>
+    <Container maxWidth='md'>
       {error && <p>{error}</p>}
-      {dogs && dogs.map((dog: Dog) => <DogCard key={dog.id} dog={dog} />)}
-      <button onClick={handlePreviousPage}>Previous Page</button>
-      <button onClick={handleNextPage}>Next Page</button>
-    </div>
+      <Grid container spacing={3}>
+        {dogs &&
+          dogs.map((dog: Dog) => (
+            <Grid item xs={12} sm={6} md={4} key={dog.id}>
+              <DogCard dog={dog} />
+            </Grid>
+          ))}
+      </Grid>
+      <Button variant='contained' color='primary' onClick={handlePreviousPage}>
+        Previous Page
+      </Button>
+      <Button variant='contained' color='primary' onClick={handleNextPage}>
+        Next Page
+      </Button>
+    </Container>
   );
 };
 

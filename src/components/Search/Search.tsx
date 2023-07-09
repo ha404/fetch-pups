@@ -55,7 +55,7 @@ const Search: React.FC = () => {
         </Toolbar>
       </AppBar>
       <main>
-        <Container maxWidth='sm'>
+        <Container maxWidth='sm' style={{ marginTop: 100 }}>
           <Typography
             variant='h2'
             align='center'
@@ -64,7 +64,12 @@ const Search: React.FC = () => {
           >
             Let's look for a pup
           </Typography>
-          <Typography variant='h6' align='center' color='textPrimary' paragraph>
+          <Typography
+            variant='h6'
+            align='center'
+            color='textSecondary'
+            paragraph
+          >
             Lorem Ipsum has been the industry standard dummy text ever since the
             1500s, when an unknown printer took a galley of type and scrambled
             it to make a type specimen book.

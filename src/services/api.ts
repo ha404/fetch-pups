@@ -31,16 +31,44 @@ interface Search {
   total: number;
 }
 
+// Hide this in env later
 const baseURL = 'https://frontend-take-home-service.fetch.com';
+
+// Define the axios interceptor to catch 401s for re-auth
+const apiInstance = axios.create({
+  baseURL: baseURL,
+  withCredentials: true,
+});
+
+apiInstance.interceptors.response.use(
+  (response) => {
+    // If the request succeeds, we don't have to do anything and just return the response
+    return response;
+  },
+  (error) => {
+    const originalRequest = error.config;
+    // If the request has failed due to an expired token,
+    // we should refresh it and attempt the request again.
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      return APIService.authenticate(originalRequest.data).then((res) => {
+        if (res.status === 200) {
+          // retry the original request
+          return apiInstance(originalRequest);
+        }
+      });
+    }
+    // If the request fails for another reason, we just reject the promise
+    return Promise.reject(error);
+  }
+);
 
 // Define the API service
 const APIService = {
   authenticate: async (data: LoginData): Promise<AxiosResponse<any>> => {
     try {
-      const response = await axios.post(`${baseURL}/auth/login`, data, {
-        withCredentials: true,
-      });
-      console.log('Response: ', response);
+      const response = await apiInstance.post(`/auth/login`, data);
+      console.log('auth response:', response.status);
       return response;
     } catch (error) {
       console.error('An error occurred while making the request: ', error);
@@ -50,10 +78,8 @@ const APIService = {
 
   getDogsIds: async (params: QueryParams): Promise<AxiosResponse<Search>> => {
     try {
-      const response = await axios.get(`${baseURL}/dogs/search`, {
-        params,
-        withCredentials: true,
-      });
+      const response = await apiInstance.get(`/dogs/search`, { params });
+      console.log('getDogsIds response:', response.status);
       return response;
     } catch (error) {
       console.log(error);
@@ -63,15 +89,13 @@ const APIService = {
 
   getDogs: async (data: string[]): Promise<AxiosResponse<Dog[]>> => {
     try {
-      const response = await axios.post(`${baseURL}/dogs`, data, {
+      const response = await apiInstance.post(`/dogs`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
-        withCredentials: true,
       });
 
-      console.log('getDogs status:', response.status); // log status
-
+      console.log('getDogs status:', response.status);
       return response;
     } catch (error) {
       console.log(error);

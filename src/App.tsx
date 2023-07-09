@@ -4,7 +4,6 @@ import Login from './components/Login/Login';
 import Search from './components/Search/Search';
 import Favorites from './components/Favorites/Favorites';
 import Match from './components/Match/Match';
-import { CssBaseline } from '@mui/material';
 
 const App: React.FC = () => {
   return (

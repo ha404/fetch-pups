@@ -5,8 +5,9 @@ import { Dog } from '../../services/api';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { AppBar, CssBaseline, Toolbar, Typography } from '@mui/material';
+import { AppBar, CssBaseline, Theme, Toolbar, Typography } from '@mui/material';
 import { Pets } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const Search: React.FC = () => {
   const [dogsIds, setDogsIds] = useState<string[]>([]);
@@ -45,36 +46,70 @@ const Search: React.FC = () => {
     }
   };
 
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await APIService.logout(); // call the logout method from API service
+      // Redirect the user to the search page
+      navigate('/');
+    } catch (err) {
+      setError('An error occurred during login. Please try again.');
+      console.error('Login Failed:', err);
+    }
+  };
+
   return (
     <>
       <CssBaseline />
+
       <AppBar position='relative'>
         <Toolbar>
-          <Typography variant='h6'>FetchPups</Typography>
           <Pets />
+          <Typography variant='h6' sx={{ flexGrow: 1 }}>
+            FetchPups
+          </Typography>
+          <Button color='inherit' onClick={handleLogout}>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <main>
-        <Container maxWidth='sm' style={{ marginTop: 100 }}>
-          <Typography
-            variant='h2'
-            align='center'
-            color='textPrimary'
-            gutterBottom
-          >
-            Let's look for a pup
-          </Typography>
-          <Typography
-            variant='h6'
-            align='center'
-            color='textSecondary'
-            paragraph
-          >
-            Lorem Ipsum has been the industry standard dummy text ever since the
-            1500s, when an unknown printer took a galley of type and scrambled
-            it to make a type specimen book.
-          </Typography>
-        </Container>
+        <div>
+          <Container maxWidth='sm' style={{ marginTop: 100 }}>
+            <Typography
+              variant='h2'
+              align='center'
+              color='textPrimary'
+              gutterBottom
+            >
+              Let's look for a pup
+            </Typography>
+            <Typography
+              variant='h6'
+              align='center'
+              color='textSecondary'
+              paragraph
+            >
+              Lorem Ipsum has been the industry standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book.
+            </Typography>
+            <div>
+              <Grid container spacing={2} justifyContent='center'>
+                <Grid item>
+                  <Button variant='contained' color='primary'>
+                    See my photos
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant='outlined' color='primary'>
+                    Secondary Action
+                  </Button>
+                </Grid>
+              </Grid>
+            </div>
+          </Container>
+        </div>
         <Container maxWidth='md'>
           {error && <p>{error}</p>}
 

@@ -42,23 +42,21 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.response.use(
   (response) => {
-    // If the request succeeds, we don't have to do anything and just return the response
     return response;
   },
-  (error) => {
+  async (error) => {
     const originalRequest = error.config;
-    // If the request has failed due to an expired token,
-    // we should refresh it and attempt the request again.
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      return APIService.authenticate(originalRequest.data).then((res) => {
+      const authData = JSON.parse(localStorage.getItem('authData') || 'null');
+      if (authData) {
+        const res = await APIService.authenticate(authData);
         if (res.status === 200) {
-          // retry the original request
+          console.log('re-auth success:', res.status);
           return apiInstance(originalRequest);
         }
-      });
+      }
     }
-    // If the request fails for another reason, we just reject the promise
     return Promise.reject(error);
   }
 );
@@ -67,6 +65,7 @@ apiInstance.interceptors.response.use(
 const APIService = {
   authenticate: async (data: LoginData): Promise<AxiosResponse<any>> => {
     try {
+      localStorage.setItem('authData', JSON.stringify(data));
       const response = await apiInstance.post(`/auth/login`, data);
       console.log('auth response:', response.status);
       return response;
@@ -99,6 +98,17 @@ const APIService = {
       return response;
     } catch (error) {
       console.log(error);
+      throw error;
+    }
+  },
+
+  logout: async (): Promise<void> => {
+    try {
+      await apiInstance.post('/auth/logout');
+      console.log('Logout successful');
+      // localStorage.removeItem('authData'); // clear the loginData from localStorage on logout
+    } catch (error) {
+      console.error('An error occurred while logging out: ', error);
       throw error;
     }
   },

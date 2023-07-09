@@ -9,17 +9,33 @@ interface DogCardProps {
 
 const DogCard: React.FC<DogCardProps> = ({ dog }) => {
   return (
-    <Card>
-      <CardMedia component='img' height='250' image={dog.img} alt={dog.name} />
+    <Card
+      raised
+      sx={{
+        maxWidth: 280,
+        margin: '0 auto',
+        padding: '0.1em',
+      }}
+    >
+      <CardMedia
+        component='img'
+        height='200'
+        image={dog.img}
+        alt={dog.name}
+        sx={{ objectFit: 'cover' }}
+      />
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
           {dog.name}
         </Typography>
         <Typography variant='body2' color='text.secondary'>
-          {dog.breed}
+          Breed: {dog.breed}
         </Typography>
         <Typography variant='body2' color='text.secondary'>
-          {dog.age} years old
+          Age: {dog.age} years old
+        </Typography>
+        <Typography variant='body2' color='text.secondary'>
+          Location : {dog.zip_code}
         </Typography>
       </CardContent>
     </Card>

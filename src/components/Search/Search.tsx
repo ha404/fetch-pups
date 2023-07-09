@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 const Search: React.FC = () => {
   const [dogsIds, setDogsIds] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(0);
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Search: React.FC = () => {
       const responseIds = await APIService.getDogsIds({
         size: 12,
         sort: 'breed:asc',
-        from: 0,
+        from: page,
       });
       setDogsIds(responseIds.data.resultIds);
 

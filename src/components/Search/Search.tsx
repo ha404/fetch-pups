@@ -13,15 +13,11 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import {
-  ArrowDownward,
-  ArrowUpward,
-  Pets,
-  SortByAlpha,
-} from '@mui/icons-material';
+import { ArrowDownward, ArrowUpward, Pets } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import TuneIcon from '@mui/icons-material/Tune';
+import ComboBox from './ComboBox';
 
 const Search: React.FC = () => {
   const [dogsIds, setDogsIds] = useState<string[]>([]);
@@ -29,10 +25,11 @@ const Search: React.FC = () => {
   const [page, setPage] = useState<number>(0);
   const [error, setError] = useState<string>('');
   const [asc, setAsc] = useState<boolean>(true);
+  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
 
   useEffect(() => {
     fetchDogs();
-  }, [page, asc]);
+  }, [page, asc, selectedBreeds]);
 
   const fetchDogs = async () => {
     try {
@@ -41,6 +38,7 @@ const Search: React.FC = () => {
         size: 9,
         sort: `breed:${asc ? 'asc' : 'desc'}`,
         from: itemCount(page),
+        breeds: selectedBreeds ? selectedBreeds : null,
       });
       setDogsIds(responseIds.data.resultIds);
       // Retrive Dogs Objects
@@ -144,6 +142,12 @@ const Search: React.FC = () => {
               </Grid>
             </Grid>
           </Container>
+          <Container>
+            <ComboBox
+              selectedBreeds={selectedBreeds}
+              setSelectedBreeds={setSelectedBreeds}
+            />
+          </Container>
         </Box>
         {/* End Hero */}
         <Container maxWidth='md'>
@@ -185,6 +189,7 @@ const Search: React.FC = () => {
               variant='outlined'
               shape='rounded'
               siblingCount={2}
+              defaultPage={1}
               showFirstButton={true}
               showLastButton={true}
             />

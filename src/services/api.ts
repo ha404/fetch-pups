@@ -22,6 +22,7 @@ interface QueryParams {
   sort: string;
   from?: number;
   next?: string;
+  breeds?: string[] | null;
 }
 
 // Define the Search interface

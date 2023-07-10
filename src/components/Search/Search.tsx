@@ -5,7 +5,7 @@ import { Dog } from '../../services/api';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { AppBar, CssBaseline, Theme, Toolbar, Typography } from '@mui/material';
+import { AppBar, Stack, Theme, Toolbar, Typography } from '@mui/material';
 import { Pets } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ const Search: React.FC = () => {
   const fetchDogs = async () => {
     try {
       const responseIds = await APIService.getDogsIds({
-        size: 12,
+        size: 9,
         sort: 'breed:asc',
         from: page,
       });
@@ -37,12 +37,12 @@ const Search: React.FC = () => {
   };
 
   const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 12);
+    setPage((prevPage) => prevPage + 9);
   };
 
   const handlePreviousPage = () => {
     if (page > 1) {
-      setPage((prevPage) => prevPage - 12);
+      setPage((prevPage) => prevPage - 9);
     }
   };
 
@@ -60,8 +60,6 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <CssBaseline />
-
       <AppBar position='relative'>
         <Toolbar>
           <Pets />
@@ -74,42 +72,41 @@ const Search: React.FC = () => {
         </Toolbar>
       </AppBar>
       <main>
-        <div>
-          <Container maxWidth='sm' style={{ marginTop: 100 }}>
-            <Typography
-              variant='h2'
-              align='center'
-              color='textPrimary'
-              gutterBottom
-            >
-              Let's look for a pup
-            </Typography>
-            <Typography
-              variant='h6'
-              align='center'
-              color='textSecondary'
-              paragraph
-            >
-              Lorem Ipsum has been the industry standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book.
-            </Typography>
-            <div>
-              <Grid container spacing={2} justifyContent='center'>
-                <Grid item>
-                  <Button variant='contained' color='primary'>
-                    See my photos
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant='outlined' color='primary'>
-                    Secondary Action
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
-          </Container>
-        </div>
+        {/* Hero Section */}
+        <Container maxWidth='sm' style={{ marginTop: 100, marginBottom: 100 }}>
+          <Typography
+            variant='h2'
+            align='center'
+            color='textPrimary'
+            gutterBottom
+          >
+            Let's look for a pup
+          </Typography>
+          <Typography
+            variant='h6'
+            align='center'
+            color='textSecondary'
+            paragraph
+          >
+            Lorem Ipsum has been the industry standard dummy text ever since the
+            1500s, when an unknown printer took a galley of type and scrambled
+            it to make a type specimen book.
+          </Typography>
+          <Stack
+            sx={{ pt: 4 }}
+            direction='row'
+            spacing={2}
+            justifyContent='center'
+          >
+            <Button variant='contained' color='primary'>
+              See my photos
+            </Button>
+            <Button variant='outlined' color='primary'>
+              Secondary Action
+            </Button>
+          </Stack>
+        </Container>
+        {/* End Hero */}
         <Container maxWidth='md'>
           {error && <p>{error}</p>}
 
@@ -121,16 +118,23 @@ const Search: React.FC = () => {
                 </Grid>
               ))}
           </Grid>
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={handlePreviousPage}
+          <Stack
+            sx={{ pt: 4 }}
+            direction='row'
+            spacing={2}
+            justifyContent='center'
           >
-            Previous Page
-          </Button>
-          <Button variant='contained' color='primary' onClick={handleNextPage}>
-            Next Page
-          </Button>
+            <Button
+              variant='contained'
+              size='medium'
+              onClick={handlePreviousPage}
+            >
+              Prev Page
+            </Button>
+            <Button variant='contained' size='medium' onClick={handleNextPage}>
+              Next Page
+            </Button>
+          </Stack>
         </Container>
       </main>
     </>

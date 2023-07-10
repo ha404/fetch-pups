@@ -28,13 +28,13 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
         <Typography gutterBottom variant='h6' component='div'>
           {dog.name}
         </Typography>
-        <Typography variant='body2' color='text.secondary'>
+        <Typography variant='body1' color='text.secondary'>
           Breed: {dog.breed}
         </Typography>
-        <Typography variant='body2' color='text.secondary'>
+        <Typography variant='body1' color='text.secondary'>
           Age: {dog.age} years old
         </Typography>
-        <Typography variant='body2' color='text.secondary'>
+        <Typography variant='body1' color='text.secondary'>
           Location : {dog.zip_code}
         </Typography>
       </CardContent>

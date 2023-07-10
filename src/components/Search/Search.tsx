@@ -7,36 +7,43 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import {
   AppBar,
+  Box,
   Pagination,
   Stack,
-  Theme,
   Toolbar,
   Typography,
 } from '@mui/material';
-import { Pets } from '@mui/icons-material';
+import {
+  ArrowDownward,
+  ArrowUpward,
+  Pets,
+  SortByAlpha,
+} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
+import TuneIcon from '@mui/icons-material/Tune';
 
 const Search: React.FC = () => {
   const [dogsIds, setDogsIds] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [page, setPage] = useState<number>(0);
   const [error, setError] = useState<string>('');
-  const [count, setCount] = useState<number>(0);
+  const [asc, setAsc] = useState<boolean>(true);
 
   useEffect(() => {
     fetchDogs();
-  }, [page]);
+  }, [page, asc]);
 
   const fetchDogs = async () => {
     try {
+      // Retrieve Dog Ids
       const responseIds = await APIService.getDogsIds({
         size: 9,
-        sort: 'breed:asc',
+        sort: `breed:${asc ? 'asc' : 'desc'}`,
         from: itemCount(page),
       });
       setDogsIds(responseIds.data.resultIds);
-
+      // Retrive Dogs Objects
       const response = await APIService.getDogs(responseIds.data.resultIds);
       setDogs(response.data);
     } catch (err) {
@@ -54,16 +61,6 @@ const Search: React.FC = () => {
     }
   };
 
-  const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 9);
-  };
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage((prevPage) => prevPage - 9);
-    }
-  };
-
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -74,6 +71,10 @@ const Search: React.FC = () => {
       setError('An error occurred during login. Please try again.');
       console.error('Login Failed:', err);
     }
+  };
+
+  const handleSort = () => {
+    setAsc((prevAsc) => !prevAsc);
   };
 
   return (
@@ -92,39 +93,58 @@ const Search: React.FC = () => {
       </AppBar>
       <main>
         {/* Hero Section */}
-        <Container maxWidth='sm' sx={{ my: 10 }}>
-          <Typography
-            variant='h2'
-            align='center'
-            color='textPrimary'
-            gutterBottom
-          >
-            Let's look for a pup
-          </Typography>
-          <Typography
-            variant='h6'
-            align='center'
-            color='textSecondary'
-            paragraph
-          >
-            Lorem Ipsum has been the industry standard dummy text ever since the
-            1500s, when an unknown printer took a galley of type and scrambled
-            it to make a type specimen book.
-          </Typography>
-          <Stack
-            sx={{ pt: 4 }}
-            direction='row'
-            spacing={2}
-            justifyContent='center'
-          >
-            <Button variant='contained' color='primary'>
-              See my photos
-            </Button>
-            <Button variant='outlined' color='primary'>
-              Secondary Action
-            </Button>
-          </Stack>
-        </Container>
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='md' sx={{ py: 5 }}>
+            <Typography
+              variant='h2'
+              align='center'
+              color='textPrimary'
+              gutterBottom
+            >
+              Let's find a match!
+            </Typography>
+            <Typography
+              variant='h6'
+              align='center'
+              color='textSecondary'
+              paragraph
+            >
+              Here at FetchPups, we love our furry friends, and hope you do too!
+              Our mission is to help a dog-lover like yourself find a lucky dog
+              to join your family. Pick a few of your favorite dogs and we will
+              find you a match!
+            </Typography>
+            <Grid container spacing={0} columns={16}>
+              <Grid item xs={8}>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  startIcon={<TuneIcon />}
+                  fullWidth
+                >
+                  FILTER
+                </Button>
+              </Grid>
+              <Grid item xs={8}>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  startIcon={asc ? <ArrowUpward /> : <ArrowDownward />}
+                  fullWidth
+                  onClick={handleSort}
+                >
+                  SORT
+                </Button>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
         {/* End Hero */}
         <Container maxWidth='md'>
           {error && <p>{error}</p>}
@@ -157,7 +177,7 @@ const Search: React.FC = () => {
         <Container maxWidth='md' sx={{ my: 5, justifyContent: 'center' }}>
           <Stack spacing={2} direction='row' justifyContent='center'>
             <Pagination
-              count={1111}
+              count={1110}
               page={page}
               size='large'
               onChange={(event, newPage) => setPage(newPage)}
@@ -165,6 +185,8 @@ const Search: React.FC = () => {
               variant='outlined'
               shape='rounded'
               siblingCount={2}
+              showFirstButton={true}
+              showLastButton={true}
             />
           </Stack>
         </Container>

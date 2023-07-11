@@ -53,7 +53,7 @@ const DogCard: React.FC<DogCardProps> = ({
         <Typography variant='body1' color='text.secondary'>
           Location : {dog.zip_code}
         </Typography>
-        <CardActions disableSpacing sx={{ py: 0 }}>
+        <CardActions disableSpacing sx={{ py: 0, pl: 0 }}>
           <IconButton
             aria-label='add to favorites'
             onClick={() => onFavoriteClick(dog.id)}

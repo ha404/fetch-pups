@@ -5,27 +5,16 @@ import { Dog } from '../../services/api';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import {
-  AppBar,
-  Box,
-  Pagination,
-  Stack,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import {
-  ArrowDownward,
-  ArrowUpward,
-  Favorite,
-  Pets,
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import LogoutIcon from '@mui/icons-material/Logout';
-import TuneIcon from '@mui/icons-material/Tune';
+import { Box, Typography } from '@mui/material';
+import { ArrowDownward, ArrowUpward, Favorite } from '@mui/icons-material';
 import Slider from '@mui/material/Slider';
-import ComboBox from './ComboBox';
+import ComboBox from '../ComboBox';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import { itemCount, valuetext } from '../../utils/utils';
+import NavBar from '../NavBar/NavBar';
+import PaginationBar from '../Pagination/PaginationBar';
+import Hero from '../Hero';
+import FilterSection from '../FilterSection';
 
 const Search: React.FC = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -36,7 +25,7 @@ const Search: React.FC = () => {
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
   const [showComboBox, setShowComboBox] = useState<boolean>(false);
   const [totalResults, setTotalResults] = useState<number>(0);
-  const [ageRange, setAgeRange] = useState<number | number[]>([0, 25]);
+  const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
   const [showFavorite, setShowFavorite] = useState<boolean>(false);
 
@@ -72,18 +61,6 @@ const Search: React.FC = () => {
     }
   };
 
-  const navigate = useNavigate();
-  const handleLogout = async () => {
-    try {
-      await APIService.logout(); // call the logout method from API service
-      // Redirect the user to the search page
-      navigate('/');
-    } catch (err) {
-      setError('An error occurred during login. Please try again.');
-      console.error('Login Failed:', err);
-    }
-  };
-
   const handleSort = () => {
     setAsc((prevAsc) => !prevAsc);
   };
@@ -104,7 +81,6 @@ const Search: React.FC = () => {
         return [...prevFavorites, id];
       }
     });
-    console.log(favorites);
   };
 
   const toggleShowFavorites = () => {
@@ -115,47 +91,31 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <AppBar position='relative'>
-        <Toolbar>
-          <Pets style={{ marginLeft: 5 }} />
-          <Typography variant='h6' flexGrow={1}>
-            FetchPups
-          </Typography>
-          <Button color='inherit' onClick={handleLogout}>
-            <LogoutIcon />
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <NavBar />
+
       <main>
         {/* Hero Section */}
         <Box
           sx={{
-            bgcolor: 'background.paper',
+            bgcolor: 'background.paperwhite',
             pt: 8,
             pb: 6,
           }}
         >
-          <Container maxWidth='md' sx={{ py: 1 }}>
-            <Typography
-              variant='h4'
-              align='center'
-              color='textPrimary'
-              gutterBottom
-            >
-              Let's find a match!
-            </Typography>
-            <Typography
-              variant='body1'
-              align='center'
-              color='textSecondary'
-              paragraph
-            >
-              Here at FetchPups, we love our furry friends, and hope you do too!
-              Our mission is to help a dog-lover like yourself find a sheltered
-              dog to join your family. Pick a few of your favorite dogs and we
-              will find you a match!
-            </Typography>
+          <Hero />
+          <FilterSection
+            asc={asc}
+            showComboBox={showComboBox}
+            handleSort={handleSort}
+            handleFilterToggle={handleFilterToggle}
+            selectedBreeds={selectedBreeds}
+            setSelectedBreeds={setSelectedBreeds}
+            ageRange={ageRange}
+            handleAgeRangeSlider={handleAgeRangeSlider}
+            ageMin={ageMin}
+            ageMax={ageMax}
+          />
+          {/* <Container maxWidth='md' sx={{ py: 1 }}>
             <Grid container spacing={0} columns={16}>
               <Grid item xs={8}>
                 <Button
@@ -215,7 +175,7 @@ const Search: React.FC = () => {
                 </Grid>
               </Container>
             )}
-          </Container>
+          </Container> */}
         </Box>
         {/* End Hero */}
 
@@ -269,41 +229,12 @@ const Search: React.FC = () => {
                 </Grid>
               ))}
           </Grid>
-          {/* <Stack
-            sx={{ pt: 4 }}
-            direction='row'
-            spacing={2}
-            justifyContent='center'
-          >
-            <Button
-              variant='contained'
-              size='medium'
-              onClick={handlePreviousPage}
-            >
-              Prev Page
-            </Button>
-            <Button variant='contained' size='medium' onClick={handleNextPage}>
-              Next Page
-            </Button>
-          </Stack> */}
         </Container>
-        <Container maxWidth='md' sx={{ my: 5, justifyContent: 'center' }}>
-          <Stack spacing={2} direction='row' justifyContent='center'>
-            <Pagination
-              count={Math.ceil(totalResults / 9)}
-              page={page}
-              size='large'
-              onChange={(event, newPage) => setPage(newPage)}
-              color='primary'
-              variant='outlined'
-              shape='rounded'
-              siblingCount={2}
-              defaultPage={1}
-              showFirstButton={true}
-              showLastButton={true}
-            />
-          </Stack>
-        </Container>
+        <PaginationBar
+          totalResults={totalResults}
+          page={page}
+          setPage={setPage}
+        />
       </main>
     </>
   );

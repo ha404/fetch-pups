@@ -23,6 +23,8 @@ interface QueryParams {
   from?: number;
   next?: string;
   breeds?: string[] | null;
+  ageMin?: number;
+  ageMax?: number;
 }
 
 // Define the Search interface

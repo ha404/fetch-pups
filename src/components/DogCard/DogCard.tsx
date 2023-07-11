@@ -1,7 +1,16 @@
 // DogCar.tsx
 import React from 'react';
 import { Dog } from '../../services/api';
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  IconButton,
+} from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Favorite } from '@mui/icons-material';
 
 interface DogCardProps {
   dog: Dog;
@@ -13,8 +22,8 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
       raised
       sx={{
         maxWidth: 280,
-        margin: '0 auto',
-        padding: '0.1em',
+        margin: '0 auto 0',
+        padding: '0 0.1em',
       }}
     >
       <CardMedia
@@ -37,6 +46,12 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
         <Typography variant='body1' color='text.secondary'>
           Location : {dog.zip_code}
         </Typography>
+        <CardActions disableSpacing sx={{ py: 0 }}>
+          <IconButton aria-label='add to favorites'>
+            <FavoriteBorderIcon color='error' />
+            {/* <Favorite color='error' /> */}
+          </IconButton>
+        </CardActions>
       </CardContent>
     </Card>
   );

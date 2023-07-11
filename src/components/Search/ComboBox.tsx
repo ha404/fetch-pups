@@ -138,17 +138,20 @@ const ComboBox: React.FC<ComboBoxProps> = ({
   return (
     <Autocomplete
       disablePortal
-      id='combo-box-demo'
+      size='small'
+      id='combo-box'
+      multiple
       options={allBreeds}
       sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label='Breed' />}
+      renderInput={(params) => (
+        <TextField {...params} label='Filter by breed' />
+      )}
       onChange={(event: any, newValues: string[] | null) => {
         if (newValues) {
           setSelectedBreeds(newValues);
         }
       }}
       value={selectedBreeds}
-      multiple
     />
   );
 };

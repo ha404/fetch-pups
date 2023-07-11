@@ -17,6 +17,7 @@ import { ArrowDownward, ArrowUpward, Pets } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import TuneIcon from '@mui/icons-material/Tune';
+import Slider from '@mui/material/Slider';
 import ComboBox from './ComboBox';
 
 const Search: React.FC = () => {
@@ -26,10 +27,18 @@ const Search: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [asc, setAsc] = useState<boolean>(true);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
+  const [showComboBox, setShowComboBox] = useState<boolean>(false);
+  const [totalResults, setTotalResults] = useState<number>(0);
+  const [ageRange, setAgeRange] = useState<number | number[]>([0, 25]);
+  const [ageMin, ageMax] = ageRange as [number, number];
+
+  function valuetext(value: number) {
+    return `${ageRange}°C`;
+  }
 
   useEffect(() => {
     fetchDogs();
-  }, [page, asc, selectedBreeds]);
+  }, [page, asc, selectedBreeds, ageRange]);
 
   const fetchDogs = async () => {
     try {
@@ -39,8 +48,11 @@ const Search: React.FC = () => {
         sort: `breed:${asc ? 'asc' : 'desc'}`,
         from: itemCount(page),
         breeds: selectedBreeds ? selectedBreeds : null,
+        ageMin: ageMin,
+        ageMax: ageMax,
       });
       setDogsIds(responseIds.data.resultIds);
+      setTotalResults(responseIds.data.total);
       // Retrive Dogs Objects
       const response = await APIService.getDogs(responseIds.data.resultIds);
       setDogs(response.data);
@@ -75,6 +87,14 @@ const Search: React.FC = () => {
     setAsc((prevAsc) => !prevAsc);
   };
 
+  const handleFilterToggle = () => {
+    setShowComboBox((prevShowComboBox) => !prevShowComboBox);
+  };
+
+  const handleAgeRangeSlider = (event: any, newValue: number | number[]) => {
+    setAgeRange(newValue as number[]);
+  };
+
   return (
     <>
       <AppBar position='relative'>
@@ -98,9 +118,9 @@ const Search: React.FC = () => {
             pb: 6,
           }}
         >
-          <Container maxWidth='md' sx={{ py: 5 }}>
+          <Container maxWidth='md' sx={{ py: 1 }}>
             <Typography
-              variant='h2'
+              variant='h4'
               align='center'
               color='textPrimary'
               gutterBottom
@@ -108,23 +128,24 @@ const Search: React.FC = () => {
               Let's find a match!
             </Typography>
             <Typography
-              variant='h6'
+              variant='body1'
               align='center'
               color='textSecondary'
               paragraph
             >
               Here at FetchPups, we love our furry friends, and hope you do too!
-              Our mission is to help a dog-lover like yourself find a lucky dog
-              to join your family. Pick a few of your favorite dogs and we will
-              find you a match!
+              Our mission is to help a dog-lover like yourself find a sheltered
+              dog to join your family. Pick a few of your favorite dogs and we
+              will find you a match!
             </Typography>
             <Grid container spacing={0} columns={16}>
               <Grid item xs={8}>
                 <Button
-                  variant='outlined'
+                  variant={showComboBox ? 'contained' : 'outlined'}
                   color='primary'
                   startIcon={<TuneIcon />}
                   fullWidth
+                  onClick={handleFilterToggle}
                 >
                   FILTER
                 </Button>
@@ -137,16 +158,45 @@ const Search: React.FC = () => {
                   fullWidth
                   onClick={handleSort}
                 >
-                  SORT
+                  SORT BY BREED
                 </Button>
               </Grid>
             </Grid>
-          </Container>
-          <Container>
-            <ComboBox
-              selectedBreeds={selectedBreeds}
-              setSelectedBreeds={setSelectedBreeds}
-            />
+            {showComboBox && (
+              <Container
+                maxWidth='md'
+                sx={{ my: 3, py: 1, border: 1, borderRadius: 1 }}
+              >
+                {' '}
+                <Typography id='track-slider' variant='h6' gutterBottom>
+                  Filter by
+                </Typography>
+                <Grid container spacing={3} columns={16}>
+                  <Grid item xs={8}>
+                    <Typography id='track-breeds' gutterBottom>
+                      Select Dog Breed(s)
+                    </Typography>
+                    <ComboBox
+                      selectedBreeds={selectedBreeds}
+                      setSelectedBreeds={setSelectedBreeds}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography id='track-slider' gutterBottom>
+                      Select Age Range: {ageMin} - {ageMax} years old
+                    </Typography>
+                    <Slider
+                      getAriaLabel={() => 'Dog Age Range'}
+                      value={ageRange}
+                      valueLabelDisplay='auto'
+                      onChange={handleAgeRangeSlider}
+                      getAriaValueText={valuetext}
+                      max={25}
+                    />
+                  </Grid>
+                </Grid>
+              </Container>
+            )}
           </Container>
         </Box>
         {/* End Hero */}
@@ -181,7 +231,7 @@ const Search: React.FC = () => {
         <Container maxWidth='md' sx={{ my: 5, justifyContent: 'center' }}>
           <Stack spacing={2} direction='row' justifyContent='center'>
             <Pagination
-              count={1110}
+              count={Math.ceil(totalResults / 9)}
               page={page}
               size='large'
               onChange={(event, newPage) => setPage(newPage)}

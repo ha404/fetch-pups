@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dog } from '../../services/api';
+import { Dog } from '../services/api';
 import {
   Card,
   CardMedia,
@@ -13,14 +13,14 @@ import { Favorite } from '@mui/icons-material';
 
 interface DogCardProps {
   dog: Dog;
-  onFavoriteClick: (id: string) => void;
-  favorites: string[];
+  onFavoriteClick?: (id: string) => void;
+  favorites?: string[];
 }
 
 const DogCard: React.FC<DogCardProps> = ({
   dog,
   onFavoriteClick,
-  favorites,
+  favorites = [],
 }) => {
   const isFavorite = favorites.includes(dog.id);
 
@@ -29,6 +29,7 @@ const DogCard: React.FC<DogCardProps> = ({
       raised
       sx={{
         maxWidth: 280,
+        minWidth: 268,
         margin: '0 auto 0',
         padding: '0 0.1em',
         borderRadius: 1,
@@ -37,6 +38,7 @@ const DogCard: React.FC<DogCardProps> = ({
       <CardMedia
         component='img'
         height='200'
+        width='100%'
         image={dog.img}
         alt={dog.name}
         sx={{ objectFit: 'cover' }}
@@ -66,18 +68,20 @@ const DogCard: React.FC<DogCardProps> = ({
         >
           Location : {dog.zip_code}
         </Typography>
-        <CardActions disableSpacing sx={{ py: 0, pl: 0 }}>
-          <IconButton
-            aria-label='add to favorites'
-            onClick={() => onFavoriteClick(dog.id)}
-          >
-            {isFavorite ? (
-              <Favorite color='error' />
-            ) : (
-              <FavoriteBorderIcon color='error' />
-            )}
-          </IconButton>
-        </CardActions>
+        {onFavoriteClick && (
+          <CardActions disableSpacing sx={{ py: 0, pl: 0 }}>
+            <IconButton
+              aria-label='add to favorites'
+              onClick={() => onFavoriteClick(dog.id)}
+            >
+              {isFavorite ? (
+                <Favorite color='error' />
+              ) : (
+                <FavoriteBorderIcon color='error' />
+              )}
+            </IconButton>
+          </CardActions>
+        )}
       </CardContent>
     </Card>
   );

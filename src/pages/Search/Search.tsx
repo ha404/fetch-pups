@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DogCard from '../DogCard/DogCard';
+import DogCard from '../../components/DogCard';
 import APIService from '../../services/api';
 import { Dog } from '../../services/api';
 import Container from '@mui/material/Container';
@@ -9,10 +9,10 @@ import { Box, Typography } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import { itemCount, valuetext } from '../../utils/utils';
-import NavBar from '../NavBar/NavBar';
-import PaginationBar from '../Pagination/PaginationBar';
-import Hero from '../Hero';
-import FilterSection from '../FilterSection';
+import NavBar from '../../components/NavBar';
+import PaginationBar from '../../components/PaginationBar';
+import Hero from '../../components/Hero';
+import FilterSection from '../../components/FilterSection';
 import { useNavigate } from 'react-router-dom';
 
 const Search: React.FC = () => {
@@ -101,7 +101,6 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <NavBar />
       <main>
         <Hero />
         <Box
@@ -138,7 +137,7 @@ const Search: React.FC = () => {
                 startIcon={<Favorite />}
                 onClick={toggleShowFavorites}
                 sx={{
-                  bgcolor: showFavorite ? null : 'white',
+                  bgcolor: showFavorite ? null : '#FFFFFF',
                   border: 0,
                   fontWeight: 700,
                 }}
@@ -151,7 +150,7 @@ const Search: React.FC = () => {
                 variant='outlined'
                 color='secondary'
                 startIcon={<CelebrationIcon />}
-                sx={{ bgcolor: 'white', border: 0, fontWeight: 700 }}
+                sx={{ bgcolor: '#FFFFFF', border: 0, fontWeight: 700 }}
                 onClick={handleMatchFavoriteClick}
               >
                 Match favorites!

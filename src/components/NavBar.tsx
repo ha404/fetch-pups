@@ -1,9 +1,9 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
 import { Pets } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
-import APIService from '../../services/api';
+import APIService from '../services/api';
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
@@ -12,15 +12,32 @@ const NavBar: React.FC = () => {
       await APIService.logout();
       navigate('/');
     } catch (err) {
-      console.error('Login Failed:', err);
+      console.error('Logout Failed:', err);
     }
+  };
+  const handleLogoClick = async () => {
+    navigate('/Search');
   };
 
   return (
-    <AppBar position='relative'>
+    <AppBar position='relative' component='nav'>
       <Toolbar>
-        <Pets style={{ marginLeft: 5 }} />
-        <Typography variant='h5' flexGrow={1} sx={{ fontWeight: 700 }}>
+        <IconButton
+          color='inherit'
+          edge='start'
+          onClick={handleLogoClick}
+          aria-label='Return to search'
+          sx={{ pr: 0 }}
+        >
+          <Pets style={{ marginLeft: 5 }} />
+        </IconButton>
+        <Typography
+          component='span'
+          onClick={handleLogoClick}
+          variant='h5'
+          flexGrow={1}
+          sx={{ fontWeight: 700 }}
+        >
           FetchPups
         </Typography>
         <Button color='inherit' onClick={handleLogout}>

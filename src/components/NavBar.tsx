@@ -16,7 +16,7 @@ const NavBar: React.FC = () => {
     }
   };
   const handleLogoClick = async () => {
-    navigate('/Search');
+    navigate('/search');
   };
 
   return (

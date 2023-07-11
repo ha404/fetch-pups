@@ -15,33 +15,35 @@ const Match: React.FC = () => {
   const { width, height } = useWindowSize();
   const navigate = useNavigate();
 
+  const fetchMatchDog = async () => {
+    const localFavorites = JSON.parse(
+      localStorage.getItem('favorites') || '[]'
+    );
+    setFavorites(localFavorites);
+
+    try {
+      const response = await APIService.match(localFavorites);
+      const matchedDogId = response.data.match;
+      const dogResponse = await APIService.getDogs([matchedDogId]);
+      const matchedDog = dogResponse.data[0];
+      setDog(matchedDog);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchMatchDog = async () => {
-      const localFavorites = JSON.parse(
-        localStorage.getItem('favorites') || '[]'
-      );
-      setFavorites(localFavorites);
-
-      try {
-        const response = await APIService.match(localFavorites);
-        const matchedDogId = response.data.match;
-        const dogResponse = await APIService.getDogs([matchedDogId]);
-        const matchedDog = dogResponse.data[0];
-        setDog(matchedDog);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
     fetchMatchDog();
   }, []);
 
   const handleBackToFavorites = () => {};
 
-  const handleRegenerateMatch = () => {};
+  const handleRegenerateMatch = async () => {
+    await fetchMatchDog();
+  };
 
   const handleBackToSearch = () => {
-    navigate('/Search');
+    navigate('/search');
   };
 
   // If dog is null, display a loading spinner
@@ -109,6 +111,7 @@ const Match: React.FC = () => {
               size='small'
               startIcon={<CelebrationIcon />}
               sx={{ fontWeight: 700 }}
+              onClick={handleRegenerateMatch}
             >
               Match
             </Button>

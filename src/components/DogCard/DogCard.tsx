@@ -31,6 +31,7 @@ const DogCard: React.FC<DogCardProps> = ({
         maxWidth: 280,
         margin: '0 auto 0',
         padding: '0 0.1em',
+        borderRadius: 1,
       }}
     >
       <CardMedia
@@ -44,13 +45,25 @@ const DogCard: React.FC<DogCardProps> = ({
         <Typography gutterBottom variant='h6' component='div'>
           {dog.name}
         </Typography>
-        <Typography variant='body1' color='text.secondary'>
+        <Typography
+          variant='body1'
+          color='text.primary'
+          sx={{ fontWeight: 400 }}
+        >
           Breed: {dog.breed}
         </Typography>
-        <Typography variant='body1' color='text.secondary'>
+        <Typography
+          variant='body1'
+          color='text.primary'
+          sx={{ fontWeight: 400 }}
+        >
           Age: {dog.age} years old
         </Typography>
-        <Typography variant='body1' color='text.secondary'>
+        <Typography
+          variant='body1'
+          color='text.primary'
+          sx={{ fontWeight: 400 }}
+        >
           Location : {dog.zip_code}
         </Typography>
         <CardActions disableSpacing sx={{ py: 0, pl: 0 }}>

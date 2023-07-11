@@ -1,13 +1,14 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import { Typography, Box } from '@mui/material';
+import { Pets } from '@mui/icons-material';
 
 const Hero: React.FC = () => {
   return (
     <Box
       sx={{
         bgcolor: 'background.paper',
-        pt: 6,
+        pt: 10,
         pb: 6,
       }}
     >
@@ -17,19 +18,22 @@ const Hero: React.FC = () => {
           align='center'
           color='textPrimary'
           gutterBottom
+          sx={{ fontWeight: 700 }}
         >
           Let's find a match!
         </Typography>
         <Typography
-          variant='body1'
+          variant='h6'
           align='center'
-          color='textSecondary'
+          color='textPrimary'
           paragraph
+          sx={{ fontWeight: 500 }}
         >
-          Here at FetchPups, we love our furry friends, and hope you do too! Our
-          mission is to help a dog-lover like yourself find a sheltered dog to
-          join your family. Pick a few of your favorite dogs and we will find
-          you a match!
+          Here at
+          <Pets />
+          FetchPups, we love our furry best friends. Our mission is to help a
+          dog-lover like yourself find a sheltered dog to join your family. Pick
+          a few of your favorite dogs and we will find you a perfect match!
         </Typography>
       </Container>
     </Box>

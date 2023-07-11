@@ -34,6 +34,9 @@ interface Search {
   total: number;
 }
 
+// Define the MatchParams interface
+interface Match {}
+
 // Hide this in env later
 const baseURL = 'https://frontend-take-home-service.fetch.com';
 

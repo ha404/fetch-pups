@@ -6,9 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { Box, Typography } from '@mui/material';
-import { ArrowDownward, ArrowUpward, Favorite } from '@mui/icons-material';
-import Slider from '@mui/material/Slider';
-import ComboBox from '../ComboBox';
+import { Favorite } from '@mui/icons-material';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import { itemCount, valuetext } from '../../utils/utils';
 import NavBar from '../NavBar/NavBar';
@@ -87,22 +85,22 @@ const Search: React.FC = () => {
     setShowFavorite((prev) => !prev);
   };
 
+  const toggleShowMatch = () => {};
+
   const favoritesCount = favorites.length;
 
   return (
     <>
       <NavBar />
-
       <main>
-        {/* Hero Section */}
+        <Hero />
         <Box
           sx={{
-            bgcolor: 'background.paperwhite',
-            pt: 8,
-            pb: 6,
+            bgcolor: 'background.paper',
+            pb: 2,
+            mb: 4,
           }}
         >
-          <Hero />
           <FilterSection
             asc={asc}
             showComboBox={showComboBox}
@@ -115,76 +113,13 @@ const Search: React.FC = () => {
             ageMin={ageMin}
             ageMax={ageMax}
           />
-          {/* <Container maxWidth='md' sx={{ py: 1 }}>
-            <Grid container spacing={0} columns={16}>
-              <Grid item xs={8}>
-                <Button
-                  variant={showComboBox ? 'contained' : 'outlined'}
-                  color='primary'
-                  startIcon={<TuneIcon />}
-                  fullWidth
-                  onClick={handleFilterToggle}
-                >
-                  FILTER
-                </Button>
-              </Grid>
-              <Grid item xs={8}>
-                <Button
-                  variant='outlined'
-                  color='primary'
-                  startIcon={asc ? <ArrowUpward /> : <ArrowDownward />}
-                  fullWidth
-                  onClick={handleSort}
-                >
-                  SORT BY BREED
-                </Button>
-              </Grid>
-            </Grid>
-            {showComboBox && (
-              <Container
-                maxWidth='md'
-                sx={{ my: 3, py: 1, border: 1, borderRadius: 0.2 }}
-              >
-                {' '}
-                <Typography id='track-slider' variant='h6' gutterBottom>
-                  Filter by
-                </Typography>
-                <Grid container spacing={3} columns={16}>
-                  <Grid item xs={8}>
-                    <Typography id='track-breeds' gutterBottom>
-                      Select Dog Breed(s)
-                    </Typography>
-                    <ComboBox
-                      selectedBreeds={selectedBreeds}
-                      setSelectedBreeds={setSelectedBreeds}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography id='track-slider' gutterBottom>
-                      Select Age Range: {ageMin} - {ageMax} years old
-                    </Typography>
-                    <Slider
-                      getAriaLabel={() => 'Dog Age Range'}
-                      value={ageRange}
-                      valueLabelDisplay='auto'
-                      onChange={handleAgeRangeSlider}
-                      getAriaValueText={valuetext}
-                      max={25}
-                    />
-                  </Grid>
-                </Grid>
-              </Container>
-            )}
-          </Container> */}
         </Box>
-        {/* End Hero */}
-
-        <Container maxWidth='md'>
+        <Container maxWidth='md' sx={{ py: 1 }}>
           <Grid
             container
             spacing={1}
             justifyContent='space-between'
-            sx={{ p: 1, mb: 1, bgcolor: '#F2F3F5', borderRadius: 1 }}
+            sx={{ py: 1, pt: 0.5, mb: 1, bgcolor: '#F2F3F5', borderRadius: 1 }}
           >
             <Grid item xs={4}>
               <Button
@@ -192,6 +127,11 @@ const Search: React.FC = () => {
                 color='error'
                 startIcon={<Favorite />}
                 onClick={toggleShowFavorites}
+                sx={{
+                  bgcolor: showFavorite ? null : 'white',
+                  border: 0,
+                  fontWeight: 700,
+                }}
               >
                 Favorites ({favoritesCount})
               </Button>
@@ -201,8 +141,10 @@ const Search: React.FC = () => {
                 variant='outlined'
                 color='secondary'
                 startIcon={<CelebrationIcon />}
+                sx={{ bgcolor: 'white', border: 0, fontWeight: 700 }}
+                onClick={toggleShowMatch}
               >
-                Match from favorites!
+                Match favorites!
               </Button>
             </Grid>
             <Grid item xs={2}>

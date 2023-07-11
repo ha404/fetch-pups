@@ -74,7 +74,13 @@ const FilterSection: React.FC<FilterProps> = ({
       {showComboBox && (
         <Container
           maxWidth='md'
-          sx={{ mt: 3, py: 1.5, border: 1, borderRadius: 0.2 }}
+          sx={{
+            mt: 3,
+            py: 1.5,
+            border: 0.2,
+            borderRadius: 1,
+            boxShadow: 1,
+          }}
         >
           <Typography id='track-slider' variant='h6' gutterBottom>
             Filter by
@@ -91,7 +97,10 @@ const FilterSection: React.FC<FilterProps> = ({
             </Grid>
             <Grid item xs={6}>
               <Typography id='track-slider' gutterBottom>
-                Select Age Range: {ageMin} - {ageMax} years old
+                Select Age Range:{' '}
+                <i>
+                  {ageMin} - {ageMax} years old
+                </i>
               </Typography>
               <Slider
                 getAriaLabel={() => 'Dog Age Range'}

@@ -20,12 +20,14 @@ const NavBar: React.FC = () => {
     <AppBar position='relative'>
       <Toolbar>
         <Pets style={{ marginLeft: 5 }} />
-        <Typography variant='h6' flexGrow={1}>
+        <Typography variant='h5' flexGrow={1} sx={{ fontWeight: 700 }}>
           FetchPups
         </Typography>
         <Button color='inherit' onClick={handleLogout}>
           <LogoutIcon />
-          Logout
+          <Typography variant='body1' flexGrow={1} sx={{ fontWeight: 500 }}>
+            Logout
+          </Typography>
         </Button>
       </Toolbar>
     </AppBar>

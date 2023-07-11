@@ -1,4 +1,3 @@
-// DogCar.tsx
 import React from 'react';
 import { Dog } from '../../services/api';
 import {
@@ -15,9 +14,16 @@ import { Favorite } from '@mui/icons-material';
 interface DogCardProps {
   dog: Dog;
   onFavoriteClick: (id: string) => void;
+  favorites: string[];
 }
 
-const DogCard: React.FC<DogCardProps> = ({ dog, onFavoriteClick }) => {
+const DogCard: React.FC<DogCardProps> = ({
+  dog,
+  onFavoriteClick,
+  favorites,
+}) => {
+  const isFavorite = favorites.includes(dog.id);
+
   return (
     <Card
       raised
@@ -52,8 +58,11 @@ const DogCard: React.FC<DogCardProps> = ({ dog, onFavoriteClick }) => {
             aria-label='add to favorites'
             onClick={() => onFavoriteClick(dog.id)}
           >
-            <FavoriteBorderIcon color='error' />
-            {/* <Favorite color='error' /> */}
+            {isFavorite ? (
+              <Favorite color='error' />
+            ) : (
+              <FavoriteBorderIcon color='error' />
+            )}
           </IconButton>
         </CardActions>
       </CardContent>

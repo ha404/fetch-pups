@@ -13,6 +13,7 @@ import NavBar from '../NavBar/NavBar';
 import PaginationBar from '../Pagination/PaginationBar';
 import Hero from '../Hero';
 import FilterSection from '../FilterSection';
+import Match from '../Match/Match';
 
 const Search: React.FC = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -26,6 +27,7 @@ const Search: React.FC = () => {
   const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
   const [showFavorite, setShowFavorite] = useState<boolean>(false);
+  const [showMatch, setShowMatch] = useState<boolean>(false);
 
   useEffect(() => {
     fetchDogs();
@@ -85,7 +87,20 @@ const Search: React.FC = () => {
     setShowFavorite((prev) => !prev);
   };
 
-  const toggleShowMatch = () => {};
+  const toggleShowMatch = async () => {
+    try {
+      const response = await APIService.match(favorites);
+      const matchedDogId = response.data.match;
+      const dogResponse = await APIService.getDogs([matchedDogId]);
+      const matchedDog = dogResponse.data[0];
+      setTotalResults(1);
+      setDogs([matchedDog]);
+      setShowMatch(true);
+    } catch (err) {
+      setError('An error occurred while matching dogs.');
+      console.error(err);
+    }
+  };
 
   const favoritesCount = favorites.length;
 

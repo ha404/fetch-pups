@@ -34,8 +34,10 @@ interface Search {
   total: number;
 }
 
-// Define the MatchParams interface
-interface Match {}
+// Define the Match interface
+interface Match {
+  match: string;
+}
 
 // Hide this in env later
 const baseURL = 'https://frontend-take-home-service.fetch.com';
@@ -115,6 +117,21 @@ const APIService = {
       // localStorage.removeItem('authData'); // clear the loginData from localStorage on logout
     } catch (error) {
       console.error('An error occurred while logging out: ', error);
+      throw error;
+    }
+  },
+
+  match: async (data: string[]): Promise<AxiosResponse<Match>> => {
+    try {
+      const response = await apiInstance.post(`/dogs/match`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('match:', response.data, response.status);
+      return response;
+    } catch (error) {
+      console.log(error);
       throw error;
     }
   },

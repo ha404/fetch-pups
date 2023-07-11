@@ -12,7 +12,6 @@ const App: React.FC = () => {
         <Route path='/' element={<Login />} />
         <Route path='/search' element={<Search />} />
         <Route path='/favorites' element={<Favorites />} />
-        <Route path='/match' element={<Match />} />
       </Routes>
     </Router>
   );

@@ -14,9 +14,10 @@ import { Favorite } from '@mui/icons-material';
 
 interface DogCardProps {
   dog: Dog;
+  onFavoriteClick: (id: string) => void;
 }
 
-const DogCard: React.FC<DogCardProps> = ({ dog }) => {
+const DogCard: React.FC<DogCardProps> = ({ dog, onFavoriteClick }) => {
   return (
     <Card
       raised
@@ -47,7 +48,10 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
           Location : {dog.zip_code}
         </Typography>
         <CardActions disableSpacing sx={{ py: 0 }}>
-          <IconButton aria-label='add to favorites'>
+          <IconButton
+            aria-label='add to favorites'
+            onClick={() => onFavoriteClick(dog.id)}
+          >
             <FavoriteBorderIcon color='error' />
             {/* <Favorite color='error' /> */}
           </IconButton>

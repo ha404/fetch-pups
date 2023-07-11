@@ -144,7 +144,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
       options={allBreeds}
       sx={{ width: 300 }}
       renderInput={(params) => (
-        <TextField {...params} label='Filter by breed' />
+        <TextField {...params} label='Filter by breeds' />
       )}
       onChange={(event: any, newValues: string[] | null) => {
         if (newValues) {

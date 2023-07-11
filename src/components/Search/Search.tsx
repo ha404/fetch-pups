@@ -21,7 +21,7 @@ import Slider from '@mui/material/Slider';
 import ComboBox from './ComboBox';
 
 const Search: React.FC = () => {
-  const [dogsIds, setDogsIds] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [page, setPage] = useState<number>(0);
   const [error, setError] = useState<string>('');
@@ -51,7 +51,6 @@ const Search: React.FC = () => {
         ageMin: ageMin,
         ageMax: ageMax,
       });
-      setDogsIds(responseIds.data.resultIds);
       setTotalResults(responseIds.data.total);
       // Retrive Dogs Objects
       const response = await APIService.getDogs(responseIds.data.resultIds);
@@ -93,6 +92,11 @@ const Search: React.FC = () => {
 
   const handleAgeRangeSlider = (event: any, newValue: number | number[]) => {
     setAgeRange(newValue as number[]);
+  };
+
+  const addFavorite = (id: string) => {
+    setFavorites([...favorites, id]);
+    console.log(favorites);
   };
 
   return (
@@ -206,7 +210,7 @@ const Search: React.FC = () => {
             {dogs &&
               dogs.map((dog: Dog) => (
                 <Grid item xs={12} sm={6} md={4} key={dog.id}>
-                  <DogCard dog={dog} />
+                  <DogCard dog={dog} onFavoriteClick={addFavorite} />
                 </Grid>
               ))}
           </Grid>

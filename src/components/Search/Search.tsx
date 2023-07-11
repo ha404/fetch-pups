@@ -13,7 +13,7 @@ import NavBar from '../NavBar/NavBar';
 import PaginationBar from '../Pagination/PaginationBar';
 import Hero from '../Hero';
 import FilterSection from '../FilterSection';
-import Match from '../Match/Match';
+import { useNavigate } from 'react-router-dom';
 
 const Search: React.FC = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -27,7 +27,7 @@ const Search: React.FC = () => {
   const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
   const [showFavorite, setShowFavorite] = useState<boolean>(false);
-  const [showMatch, setShowMatch] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDogs();
@@ -75,11 +75,17 @@ const Search: React.FC = () => {
 
   const handleFavoriteClick = (id: string) => {
     setFavorites((prevFavorites) => {
+      let newFavorites;
       if (prevFavorites.includes(id)) {
-        return prevFavorites.filter((dogId) => dogId !== id);
+        newFavorites = prevFavorites.filter((dogId) => dogId !== id);
       } else {
-        return [...prevFavorites, id];
+        newFavorites = [...prevFavorites, id];
       }
+
+      // Update local storage directly after state update
+      localStorage.setItem('favorites', JSON.stringify(newFavorites));
+
+      return newFavorites;
     });
   };
 
@@ -87,19 +93,8 @@ const Search: React.FC = () => {
     setShowFavorite((prev) => !prev);
   };
 
-  const toggleShowMatch = async () => {
-    try {
-      const response = await APIService.match(favorites);
-      const matchedDogId = response.data.match;
-      const dogResponse = await APIService.getDogs([matchedDogId]);
-      const matchedDog = dogResponse.data[0];
-      setTotalResults(1);
-      setDogs([matchedDog]);
-      setShowMatch(true);
-    } catch (err) {
-      setError('An error occurred while matching dogs.');
-      console.error(err);
-    }
+  const handleMatchFavoriteClick = () => {
+    navigate('/match');
   };
 
   const favoritesCount = favorites.length;
@@ -157,7 +152,7 @@ const Search: React.FC = () => {
                 color='secondary'
                 startIcon={<CelebrationIcon />}
                 sx={{ bgcolor: 'white', border: 0, fontWeight: 700 }}
-                onClick={toggleShowMatch}
+                onClick={handleMatchFavoriteClick}
               >
                 Match favorites!
               </Button>

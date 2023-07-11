@@ -9,14 +9,14 @@ import { Box, Typography } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import { itemCount, valuetext } from '../../utils/utils';
-import NavBar from '../../components/NavBar';
 import PaginationBar from '../../components/PaginationBar';
 import Hero from '../../components/Hero';
 import FilterSection from '../../components/FilterSection';
 import { useNavigate } from 'react-router-dom';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Search: React.FC = () => {
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useLocalStorage<string[]>('favorites', []);
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [page, setPage] = useState<number>(0);
   const [error, setError] = useState<string>('');
@@ -75,17 +75,11 @@ const Search: React.FC = () => {
 
   const handleFavoriteClick = (id: string) => {
     setFavorites((prevFavorites) => {
-      let newFavorites;
       if (prevFavorites.includes(id)) {
-        newFavorites = prevFavorites.filter((dogId) => dogId !== id);
+        return prevFavorites.filter((dogId) => dogId !== id);
       } else {
-        newFavorites = [...prevFavorites, id];
+        return [...prevFavorites, id];
       }
-
-      // Update local storage directly after state update
-      localStorage.setItem('favorites', JSON.stringify(newFavorites));
-
-      return newFavorites;
     });
   };
 
@@ -94,7 +88,11 @@ const Search: React.FC = () => {
   };
 
   const handleMatchFavoriteClick = () => {
-    navigate('/match');
+    if (favoritesCount === 0) {
+      alert('Please add some favorites first!');
+    } else {
+      navigate('/match');
+    }
   };
 
   const favoritesCount = favorites.length;

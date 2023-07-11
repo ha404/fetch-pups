@@ -101,7 +101,7 @@ const Match: React.FC = () => {
                 fontWeight: 700,
               }}
             >
-              Favorites (0)
+              Favorites ({favorites.length})
             </Button>
           </Grid>
           <Grid item>

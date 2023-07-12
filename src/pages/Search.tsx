@@ -12,6 +12,7 @@ import FilterSection from '../components/Filter/FilterSection';
 import MatchButton from '../components/Buttons/MatchButton';
 import FavoritesButton from '../components/Buttons/FavoriteButton';
 import { FavoritesContext } from '../context/FavoritesContext';
+import { isAxiosError } from 'axios';
 
 const Search: React.FC = () => {
   const { favorites, setFavorites, showFavorite, setShowFavorite } =
@@ -55,7 +56,15 @@ const Search: React.FC = () => {
       const response = await APIService.getDogs(dogIds);
       setDogs(response.data);
     } catch (err) {
-      setError('An error occurred while fetching dogs.');
+      if (isAxiosError(err) && err.response?.status === 400) {
+        setError('An error occurred while fetching dogs, please try again');
+      } else if (isAxiosError(err) && err.request) {
+        setError(
+          'A network error occurred, please check your internet connection'
+        );
+      } else {
+        setError('An unexpected error occurred');
+      }
       console.error(err);
     }
   };

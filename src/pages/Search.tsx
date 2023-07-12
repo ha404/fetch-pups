@@ -31,6 +31,7 @@ const Search: React.FC = () => {
     fetchData();
   }, [page, asc, selectedBreeds, ageRange, showFavorite]);
 
+  // Fetch dogs data from the API based on the current search criteria
   const fetchData = async () => {
     try {
       const { dogs, totalResults } = await fetchDogs(
@@ -44,6 +45,7 @@ const Search: React.FC = () => {
       setDogs(dogs);
       setTotalResults(totalResults);
     } catch (err) {
+      // Handle errors
       if (isAxiosError(err) && err.response?.status === 400) {
         setError('An error occurred while fetching dogs, please try again');
       } else if (isAxiosError(err) && err.request) {
@@ -57,32 +59,27 @@ const Search: React.FC = () => {
     }
   };
 
-  const handleSort = () => {
-    setAsc((prevAsc) => !prevAsc);
-  };
-
+  // Handle age range slider change
   const handleAgeRangeSlider = (event: any, newValue: number | number[]) => {
     setAgeRange(newValue as number[]);
   };
 
-  const handleAddFavoriteClick = (id: string) => {
-    setFavorites((prevFavorites) => {
-      if (prevFavorites.includes(id)) {
-        return prevFavorites.filter((dogId) => dogId !== id);
-      } else {
-        return [...prevFavorites, id];
-      }
-    });
-  };
-
+  // Toggle show/hide filter section
   const toggleShowFilter = () => {
     setShowComboBox((prevShowComboBox) => !prevShowComboBox);
   };
 
+  // Handle sort order toggle
+  const toggleSortOrder = () => {
+    setAsc((prevAsc) => !prevAsc);
+  };
+
+  // Toggle show/hide favorite dogs
   const toggleShowFavorites = () => {
     setShowFavorite((prev) => !prev);
   };
 
+  // Calculate the count of favorite dogs
   const favoritesCount = favorites.length;
 
   return (
@@ -100,7 +97,7 @@ const Search: React.FC = () => {
           <FilterSection
             asc={asc}
             showComboBox={showComboBox}
-            handleSort={handleSort}
+            handleSort={toggleSortOrder}
             toggleShowFilter={toggleShowFilter}
             selectedBreeds={selectedBreeds}
             setSelectedBreeds={setSelectedBreeds}
@@ -146,11 +143,7 @@ const Search: React.FC = () => {
             {dogs &&
               dogs.map((dog: Dog) => (
                 <Grid item xs={12} sm={6} md={4} key={dog.id}>
-                  <DogCard
-                    dog={dog}
-                    onFavoriteClick={handleAddFavoriteClick}
-                    favorites={favorites}
-                  />
+                  <DogCard dog={dog} />
                 </Grid>
               ))}
           </Grid>

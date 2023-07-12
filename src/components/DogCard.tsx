@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Dog } from '../services/api';
 import {
   Card,
@@ -10,19 +10,26 @@ import {
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Favorite } from '@mui/icons-material';
+import { FavoritesContext } from '../context/FavoritesContext';
 
 interface DogCardProps {
   dog: Dog;
-  onFavoriteClick?: (id: string) => void;
-  favorites?: string[];
 }
 
-const DogCard: React.FC<DogCardProps> = ({
-  dog,
-  onFavoriteClick,
-  favorites = [],
-}) => {
+const DogCard: React.FC<DogCardProps> = ({ dog }) => {
+  const { favorites, setFavorites } = useContext(FavoritesContext);
   const isFavorite = favorites.includes(dog.id);
+
+  // Add or remove from favorites based on the current favorite status
+  const handleAddFavoriteClick = () => {
+    if (isFavorite) {
+      setFavorites((prevFavorites) =>
+        prevFavorites.filter((id) => id !== dog.id)
+      );
+    } else {
+      setFavorites((prevFavorites) => [...prevFavorites, dog.id]);
+    }
+  };
 
   return (
     <Card
@@ -66,13 +73,13 @@ const DogCard: React.FC<DogCardProps> = ({
           color='text.primary'
           sx={{ fontWeight: 400 }}
         >
-          Location : {dog.zip_code}
+          Location: {dog.zip_code}
         </Typography>
-        {onFavoriteClick && (
+        {favorites && (
           <CardActions disableSpacing sx={{ py: 0, pl: 0 }}>
             <IconButton
               aria-label='add to favorites'
-              onClick={() => onFavoriteClick(dog.id)}
+              onClick={handleAddFavoriteClick}
             >
               {isFavorite ? (
                 <Favorite color='error' />

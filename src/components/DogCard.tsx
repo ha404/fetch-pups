@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Dog } from '../services/api';
 import {
   Card,
@@ -20,8 +20,8 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const isFavorite = favorites.includes(dog.id);
 
-  // Add or remove from favorites based on the current favorite status
-  const handleAddFavoriteClick = () => {
+  // Add or remove from favorites based on the current isFavorite status
+  const handleFavoriteIconButtonClick = () => {
     if (isFavorite) {
       setFavorites((prevFavorites) =>
         prevFavorites.filter((id) => id !== dog.id)
@@ -78,8 +78,10 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
         {favorites && (
           <CardActions disableSpacing sx={{ py: 0, pl: 0 }}>
             <IconButton
-              aria-label='add to favorites'
-              onClick={handleAddFavoriteClick}
+              aria-label={
+                !isFavorite ? 'add to favorites' : 'remove from favorites'
+              }
+              onClick={handleFavoriteIconButtonClick}
             >
               {isFavorite ? (
                 <Favorite color='error' />

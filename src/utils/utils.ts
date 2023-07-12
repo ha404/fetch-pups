@@ -12,3 +12,4 @@ export const itemCount = (page: number) => {
 export const valuetext = (value: number) => {
   return `${value}dog age`;
 };
+// "test": "react-scripts test --env=jsdom",

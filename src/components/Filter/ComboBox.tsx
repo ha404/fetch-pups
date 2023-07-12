@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { allBreeds } from './breeds';
+import { allBreeds } from './breedsData';
 
 interface ComboBoxProps {
   selectedBreeds: string[];

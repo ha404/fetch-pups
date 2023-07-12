@@ -25,7 +25,7 @@ const Search: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [asc, setAsc] = useState<boolean>(true);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
-  const [showComboBox, setShowComboBox] = useState<boolean>(false);
+  const [showFilter, setShowFilter] = useState<boolean>(false);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
@@ -69,7 +69,7 @@ const Search: React.FC = () => {
 
   // Toggle show/hide filter section
   const toggleShowFilter = () => {
-    setShowComboBox((prevShowComboBox) => !prevShowComboBox);
+    setShowFilter((prevShowFilter) => !prevShowFilter);
   };
 
   // Handle sort order toggle
@@ -99,7 +99,7 @@ const Search: React.FC = () => {
         >
           <FilterSection
             asc={asc}
-            showComboBox={showComboBox}
+            showComboBox={showFilter}
             handleSort={toggleSortOrder}
             toggleShowFilter={toggleShowFilter}
             selectedBreeds={selectedBreeds}

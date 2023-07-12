@@ -40,7 +40,7 @@ interface Match {
 }
 
 // Hide this in env later
-const baseURL = 'https://frontend-take-home-service.fetch.com';
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 // Define the axios interceptor to catch 401s for re-auth
 const apiInstance = axios.create({

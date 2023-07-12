@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <AppBar position='relative' component='nav'>
+    <AppBar position='sticky' component='nav'>
       <Toolbar>
         <IconButton
           color='inherit'

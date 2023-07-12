@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PetsIcon from '@mui/icons-material/Pets';
 
 const EmptyFavoritesAlert: React.FC = () => {

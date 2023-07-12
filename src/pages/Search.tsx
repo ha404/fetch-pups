@@ -17,7 +17,7 @@ import SearchButton from '../components/Buttons/SearchButton';
 import EmptyFavoritesAlert from '../components/EmptyFavoritesAlert';
 
 const Search: React.FC = () => {
-  const { favorites, setFavorites, showFavorite, setShowFavorite } =
+  const { favorites, showFavorite, setShowFavorite } =
     useContext(FavoritesContext);
 
   const [dogs, setDogs] = useState<Dog[]>([]);

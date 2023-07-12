@@ -12,6 +12,8 @@ import FavoritesButton from '../components/Buttons/FavoriteButton';
 import { FavoritesContext } from '../context/FavoritesContext';
 import { isAxiosError } from 'axios';
 import { fetchDogs } from '../services/dogApi';
+import ClearFavoritesButton from '../components/Buttons/ClearFavoritesButton';
+import SearchButton from '../components/Buttons/SearchButton';
 
 const Search: React.FC = () => {
   const { favorites, setFavorites, showFavorite, setShowFavorite } =
@@ -123,7 +125,9 @@ const Search: React.FC = () => {
                   showFavorite={showFavorite}
                   toggleShowFavorite={toggleShowFavorites}
                 />
+                {showFavorite ? <ClearFavoritesButton /> : null}
                 <MatchButton />
+                {showFavorite ? <SearchButton /> : null}
               </Container>
             </Grid>
             <Grid item xs={3}>

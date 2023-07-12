@@ -14,6 +14,7 @@ import { isAxiosError } from 'axios';
 import { fetchDogs } from '../services/dogApi';
 import ClearFavoritesButton from '../components/Buttons/ClearFavoritesButton';
 import SearchButton from '../components/Buttons/SearchButton';
+import EmptyFavoritesAlert from '../components/EmptyFavoritesAlert';
 
 const Search: React.FC = () => {
   const { favorites, setFavorites, showFavorite, setShowFavorite } =
@@ -144,12 +145,15 @@ const Search: React.FC = () => {
           {error && <p>{error}</p>}
           {/* Dog Cards Section */}
           <Grid container spacing={3}>
-            {dogs &&
+            {favorites.length === 0 && showFavorite ? (
+              <EmptyFavoritesAlert />
+            ) : (
               dogs.map((dog: Dog) => (
                 <Grid item xs={12} sm={6} md={4} key={dog.id}>
                   <DogCard dog={dog} />
                 </Grid>
-              ))}
+              ))
+            )}
           </Grid>
           {/*End Dog Cards Section*/}
         </Container>

@@ -20,8 +20,9 @@ const FavoritesButton: React.FC<FavoriteButtonProps> = ({
     if (location.pathname === '/match') {
       navigate('/search');
       toggleShowFavorite();
+    } else {
+      toggleShowFavorite();
     }
-    toggleShowFavorite();
   };
 
   return (

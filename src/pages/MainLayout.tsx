@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from '../components/NavBar';
-import Search from './Search/Search';
+import Search from './Search';
 import Favorites from '../components/Favorites';
-import Match from './Match/Match';
+import Match from './Match';
 import { FavoritesProvider } from '../context/FavoritesContext';
 
 const MainLayout: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import APIService from '../../services/api';
+import APIService from '../services/api';
 
 const Login = () => {
   const [name, setName] = useState<string>('');

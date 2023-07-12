@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
-import DogCard from '../../components/DogCard';
-import APIService from '../../services/api';
-import { Dog } from '../../services/api';
+import DogCard from '../components/DogCard';
+import APIService from '../services/api';
+import { Dog } from '../services/api';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { Box, Typography } from '@mui/material';
-import { itemCount, valuetext } from '../../utils/utils';
-import PaginationBar from '../../components/PaginationBar';
-import Hero from '../../components/Hero';
-import FilterSection from '../../components/Filter/FilterSection';
-import MatchButton from '../../components/Buttons/MatchButton';
-import FavoritesButton from '../../components/Buttons/FavoriteButton';
-import { FavoritesContext } from '../../context/FavoritesContext';
+import { itemCount } from '../utils/utils';
+import PaginationBar from '../components/PaginationBar';
+import Hero from '../components/Hero';
+import FilterSection from '../components/Filter/FilterSection';
+import MatchButton from '../components/Buttons/MatchButton';
+import FavoritesButton from '../components/Buttons/FavoriteButton';
+import { FavoritesContext } from '../context/FavoritesContext';
 
 const Search: React.FC = () => {
   const { favorites, setFavorites, showFavorite, setShowFavorite } =
@@ -36,6 +36,7 @@ const Search: React.FC = () => {
       let dogIds: string[] = [];
       if (showFavorite) {
         dogIds = favorites;
+        setTotalResults(favorites.length);
       } else {
         // Retrieve Dog Ids
         const responseIds = await APIService.getDogsIds({

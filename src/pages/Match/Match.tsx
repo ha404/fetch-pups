@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import APIService from '../../services/api';
 import { Dog } from '../../services/api';
-import { Box, CircularProgress, Typography, Button, Grid } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  Button,
+  Grid,
+  Tooltip,
+} from '@mui/material';
 import DogCard from '../../components/DogCard';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Favorite } from '@mui/icons-material';
-import CelebrationIcon from '@mui/icons-material/Celebration';
+import MatchButton from '../../components/Buttons/MatchButton';
+import SearchButton from '../../components/Buttons/SearchButton';
 
 const Match: React.FC = () => {
   const [dog, setDog] = useState<Dog | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const { width, height } = useWindowSize();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const fetchMatchDog = async () => {
     const localFavorites = JSON.parse(
@@ -34,13 +43,7 @@ const Match: React.FC = () => {
 
   useEffect(() => {
     fetchMatchDog();
-  }, []);
-
-  const handleBackToFavorites = () => {};
-
-  const handleRegenerateMatch = async () => {
-    await fetchMatchDog();
-  };
+  }, [location]);
 
   const handleBackToSearch = () => {
     navigate('/search');
@@ -105,26 +108,10 @@ const Match: React.FC = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Button
-              variant='contained'
-              color='secondary'
-              size='small'
-              startIcon={<CelebrationIcon />}
-              sx={{ fontWeight: 700 }}
-              onClick={handleRegenerateMatch}
-            >
-              Match
-            </Button>
+            <MatchButton />
           </Grid>
           <Grid item>
-            <Button
-              variant='contained'
-              color='primary'
-              size='small'
-              onClick={handleBackToSearch}
-            >
-              Back to Search
-            </Button>
+            <SearchButton />
           </Grid>
         </Grid>
       </Box>

@@ -7,13 +7,13 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { Box, Typography } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
-import CelebrationIcon from '@mui/icons-material/Celebration';
 import { itemCount, valuetext } from '../../utils/utils';
 import PaginationBar from '../../components/PaginationBar';
 import Hero from '../../components/Hero';
 import FilterSection from '../../components/FilterSection';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import MatchButton from '../../components/Buttons/MatchButton';
 
 const Search: React.FC = () => {
   const [favorites, setFavorites] = useLocalStorage<string[]>('favorites', []);
@@ -27,7 +27,6 @@ const Search: React.FC = () => {
   const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
   const [showFavorite, setShowFavorite] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDogs();
@@ -73,7 +72,7 @@ const Search: React.FC = () => {
     setAgeRange(newValue as number[]);
   };
 
-  const handleFavoriteClick = (id: string) => {
+  const handleAddFavoriteClick = (id: string) => {
     setFavorites((prevFavorites) => {
       if (prevFavorites.includes(id)) {
         return prevFavorites.filter((dogId) => dogId !== id);
@@ -85,14 +84,6 @@ const Search: React.FC = () => {
 
   const toggleShowFavorites = () => {
     setShowFavorite((prev) => !prev);
-  };
-
-  const handleMatchFavoriteClick = () => {
-    if (favoritesCount === 0) {
-      alert('Please add some favorites first!');
-    } else {
-      navigate('/match');
-    }
   };
 
   const favoritesCount = favorites.length;
@@ -125,40 +116,32 @@ const Search: React.FC = () => {
           <Grid
             container
             spacing={1}
-            justifyContent='space-between'
+            justifyContent='space between'
             sx={{ py: 1, pt: 0.5, mb: 1, bgcolor: '#F2F3F5', borderRadius: 1 }}
           >
-            <Grid item xs={4}>
-              <Button
-                variant={showFavorite ? 'contained' : 'outlined'}
-                color='error'
-                startIcon={<Favorite />}
-                onClick={toggleShowFavorites}
-                sx={{
-                  bgcolor: showFavorite ? null : '#FFFFFF',
-                  border: 0,
-                  fontWeight: 700,
-                }}
-              >
-                Favorites ({favoritesCount})
-              </Button>
+            <Grid item xs={9}>
+              <Container>
+                <Button
+                  variant='contained'
+                  color='error'
+                  startIcon={<Favorite />}
+                  onClick={toggleShowFavorites}
+                  size='small'
+                  sx={{
+                    border: 0,
+                    fontWeight: 700,
+                  }}
+                >
+                  Favorites ({favoritesCount})
+                </Button>
+                <MatchButton />
+              </Container>
             </Grid>
-            <Grid item xs={5}>
-              <Button
-                variant='outlined'
-                color='secondary'
-                startIcon={<CelebrationIcon />}
-                sx={{ bgcolor: '#FFFFFF', border: 0, fontWeight: 700 }}
-                onClick={handleMatchFavoriteClick}
-              >
-                Match favorites!
-              </Button>
-            </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <Typography
                 variant='subtitle1'
                 align='center'
-                sx={{ pt: 1, pb: 0 }}
+                sx={{ pt: 1, pb: 0, pl: 5 }}
                 color='primary'
               >
                 <b>{totalResults}</b> Results
@@ -172,7 +155,7 @@ const Search: React.FC = () => {
                 <Grid item xs={12} sm={6} md={4} key={dog.id}>
                   <DogCard
                     dog={dog}
-                    onFavoriteClick={handleFavoriteClick}
+                    onFavoriteClick={handleAddFavoriteClick}
                     favorites={favorites}
                   />
                 </Grid>

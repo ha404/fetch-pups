@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import DogCard from '../../components/DogCard';
 import APIService from '../../services/api';
 import { Dog } from '../../services/api';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import { Box, Typography } from '@mui/material';
-import { Favorite } from '@mui/icons-material';
 import { itemCount, valuetext } from '../../utils/utils';
 import PaginationBar from '../../components/PaginationBar';
 import Hero from '../../components/Hero';
-import FilterSection from '../../components/FilterSection';
-import { useNavigate } from 'react-router-dom';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import FilterSection from '../../components/Filter/FilterSection';
 import MatchButton from '../../components/Buttons/MatchButton';
+import FavoritesButton from '../../components/Buttons/FavoriteButton';
+import { FavoritesContext } from '../../context/FavoritesContext';
 
 const Search: React.FC = () => {
-  const [favorites, setFavorites] = useLocalStorage<string[]>('favorites', []);
+  const { favorites, setFavorites, showFavorite, setShowFavorite } =
+    useContext(FavoritesContext);
+
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [page, setPage] = useState<number>(0);
   const [error, setError] = useState<string>('');
@@ -26,7 +26,6 @@ const Search: React.FC = () => {
   const [totalResults, setTotalResults] = useState<number>(0);
   const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
-  const [showFavorite, setShowFavorite] = useState<boolean>(false);
 
   useEffect(() => {
     fetchDogs();
@@ -64,10 +63,6 @@ const Search: React.FC = () => {
     setAsc((prevAsc) => !prevAsc);
   };
 
-  const handleFilterToggle = () => {
-    setShowComboBox((prevShowComboBox) => !prevShowComboBox);
-  };
-
   const handleAgeRangeSlider = (event: any, newValue: number | number[]) => {
     setAgeRange(newValue as number[]);
   };
@@ -82,6 +77,10 @@ const Search: React.FC = () => {
     });
   };
 
+  const toggleShowFilter = () => {
+    setShowComboBox((prevShowComboBox) => !prevShowComboBox);
+  };
+
   const toggleShowFavorites = () => {
     setShowFavorite((prev) => !prev);
   };
@@ -92,6 +91,7 @@ const Search: React.FC = () => {
     <>
       <main>
         <Hero />
+        {/* Search Section */}
         <Box
           sx={{
             bgcolor: 'background.paper',
@@ -103,7 +103,7 @@ const Search: React.FC = () => {
             asc={asc}
             showComboBox={showComboBox}
             handleSort={handleSort}
-            handleFilterToggle={handleFilterToggle}
+            toggleShowFilter={toggleShowFilter}
             selectedBreeds={selectedBreeds}
             setSelectedBreeds={setSelectedBreeds}
             ageRange={ageRange}
@@ -112,6 +112,8 @@ const Search: React.FC = () => {
             ageMax={ageMax}
           />
         </Box>
+        {/* End Search Section */}
+        {/* Results Section */}
         <Container maxWidth='md' sx={{ py: 1 }}>
           <Grid
             container
@@ -121,19 +123,11 @@ const Search: React.FC = () => {
           >
             <Grid item xs={9}>
               <Container>
-                <Button
-                  variant='contained'
-                  color='error'
-                  startIcon={<Favorite />}
-                  onClick={toggleShowFavorites}
-                  size='small'
-                  sx={{
-                    border: 0,
-                    fontWeight: 700,
-                  }}
-                >
-                  Favorites ({favoritesCount})
-                </Button>
+                <FavoritesButton
+                  favoritesCount={favoritesCount}
+                  showFavorite={showFavorite}
+                  toggleShowFavorite={toggleShowFavorites}
+                />
                 <MatchButton />
               </Container>
             </Grid>
@@ -149,6 +143,7 @@ const Search: React.FC = () => {
             </Grid>
           </Grid>
           {error && <p>{error}</p>}
+          {/* Dog Cards Section */}
           <Grid container spacing={3}>
             {dogs &&
               dogs.map((dog: Dog) => (
@@ -161,7 +156,9 @@ const Search: React.FC = () => {
                 </Grid>
               ))}
           </Grid>
+          {/*End Dog Cards Section*/}
         </Container>
+        {/* End Results Section */}
         <PaginationBar
           totalResults={totalResults}
           page={page}

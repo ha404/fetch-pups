@@ -17,7 +17,7 @@ interface FilterProps {
   ageMin: number;
   ageMax: number;
   handleSort: () => void;
-  handleFilterToggle: () => void;
+  toggleShowFilter: () => void;
   handleAgeRangeSlider: (event: any, newValue: number | number[]) => void;
 }
 
@@ -28,7 +28,7 @@ const FilterSection: React.FC<FilterProps> = ({
   setSelectedBreeds,
   ageRange,
   handleSort,
-  handleFilterToggle,
+  toggleShowFilter,
   handleAgeRangeSlider,
   ageMin,
   ageMax,
@@ -42,7 +42,7 @@ const FilterSection: React.FC<FilterProps> = ({
             color='primary'
             startIcon={<TuneIcon />}
             fullWidth
-            onClick={handleFilterToggle}
+            onClick={toggleShowFilter}
             sx={{
               border: 0.2,
               borderTopRightRadius: 0,

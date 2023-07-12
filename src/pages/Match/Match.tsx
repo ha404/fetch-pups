@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import APIService from '../../services/api';
 import { Dog } from '../../services/api';
-import {
-  Box,
-  CircularProgress,
-  Typography,
-  Button,
-  Grid,
-  Tooltip,
-} from '@mui/material';
+import { Box, CircularProgress, Typography, Button, Grid } from '@mui/material';
 import DogCard from '../../components/DogCard';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Favorite } from '@mui/icons-material';
 import MatchButton from '../../components/Buttons/MatchButton';
 import SearchButton from '../../components/Buttons/SearchButton';
@@ -21,7 +14,6 @@ const Match: React.FC = () => {
   const [dog, setDog] = useState<Dog | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const { width, height } = useWindowSize();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const fetchMatchDog = async () => {
@@ -44,10 +36,6 @@ const Match: React.FC = () => {
   useEffect(() => {
     fetchMatchDog();
   }, [location]);
-
-  const handleBackToSearch = () => {
-    navigate('/search');
-  };
 
   // If dog is null, display a loading spinner
   if (dog === null) {

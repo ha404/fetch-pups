@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const FavoritesButton: React.FC = () => {
-  const [favoritesCount, setFavoritesCount] = useState(0);
+interface FavoriteButtonProps {
+  favoritesCount: number;
+  showFavorite: boolean;
+  toggleShowFavorite: () => void;
+}
 
-  useEffect(() => {
-    const localFavorites = JSON.parse(
-      localStorage.getItem('favorites') || '[]'
-    );
-    setFavoritesCount(localFavorites.length);
-  }, []);
+const FavoritesButton: React.FC<FavoriteButtonProps> = ({
+  favoritesCount,
+  showFavorite,
+  toggleShowFavorite,
+}) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleFavoriteButtonClick = () => {
+    if (location.pathname === '/match') {
+      navigate('/search');
+      toggleShowFavorite();
+    }
+    toggleShowFavorite();
+  };
 
   return (
     <Button
-      variant='contained'
+      variant={showFavorite ? 'outlined' : 'contained'}
       color='error'
       startIcon={<Favorite />}
       size='small'
+      onClick={handleFavoriteButtonClick}
       sx={{
-        border: 0,
         fontWeight: 700,
       }}
     >

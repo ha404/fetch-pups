@@ -36,116 +36,115 @@ const FilterSection: React.FC<FilterProps> = ({
 }) => {
   return (
     <>
-      <Container disableGutters maxWidth={false} sx={{ maxWidth: '16rem' }}>
-        <Box
-          sx={{
-            py: '1em',
-            px: '1em',
-            my: 5,
-            bgcolor: '#FFFFFF',
-            alignItems: 'left',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
+      <Box
+        sx={{
+          py: 1,
+          px: { xs: 0, lg: ' 1rem' },
+          mt: 2,
+          bgcolor: '#FFFFFF',
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: { xs: '80%', sm: '600px', md: '800px', lg: '1200px' },
+          mx: { xs: 0, lg: 'auto' },
+        }}
+      >
+        <Typography
+          id='filter-title'
+          color='primary'
+          variant='h6'
+          gutterBottom
+          sx={{ fontWeight: 700 }}
         >
-          <Typography
-            id='filter-title'
-            color='primary'
-            variant='h6'
-            gutterBottom
-            sx={{ fontWeight: 700 }}
-          >
-            Search By Filters
-          </Typography>
-          <Grid container spacing={0} columns={16}>
-            <Grid item xs={8}>
-              <Button
-                variant={showComboBox ? 'contained' : 'outlined'}
-                color='primary'
-                startIcon={<TuneIcon />}
-                fullWidth
-                // onClick={toggleShowFilter}
-                sx={{
-                  border: 0.2,
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
-                  borderRight: 0.1,
-                }}
-              >
-                FILTER
-              </Button>
-            </Grid>
-            <Grid item xs={8}>
-              <Button
-                variant='outlined'
-                color='primary'
-                startIcon={asc ? <ArrowUpward /> : <ArrowDownward />}
-                fullWidth
-                onClick={handleSort}
-                sx={{
-                  border: 0.2,
-                  borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0,
-                }}
-              >
-                SORT
-              </Button>
-            </Grid>
-          </Grid>
-          <Box display='flex' flexDirection='column' sx={{ py: 2 }}>
-            <Box
+          Search By Filter
+        </Typography>
+        <Grid container spacing={0} columns={12}>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Button
+              variant={showComboBox ? 'contained' : 'outlined'}
+              color='primary'
+              startIcon={<TuneIcon />}
+              fullWidth
+              // onClick={toggleShowFilter}
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                py: 1,
+                border: 0.2,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+                borderRight: 0.1,
               }}
             >
-              <Typography
-                id='track-breeds'
-                variant='body2'
-                gutterBottom
-                sx={{ fontWeight: 400 }}
-              >
-                Select Dog Breed(s)
-              </Typography>
-              <Box sx={{ pl: 1, pr: 0 }}>
-                <ComboBox
-                  selectedBreeds={selectedBreeds}
-                  setSelectedBreeds={setSelectedBreeds}
-                />
-              </Box>
+              FILTER
+            </Button>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Button
+              variant='outlined'
+              color='primary'
+              startIcon={asc ? <ArrowUpward /> : <ArrowDownward />}
+              fullWidth
+              onClick={handleSort}
+              sx={{
+                border: 0.2,
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
+              }}
+            >
+              SORT
+            </Button>
+          </Grid>
+        </Grid>
+        <Box display='flex' flexDirection='column' sx={{ py: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              py: 1,
+            }}
+          >
+            <Typography
+              id='track-breeds'
+              variant='body2'
+              gutterBottom
+              sx={{ fontWeight: 400 }}
+            >
+              Select Dog Breed(s)
+            </Typography>
+            <Box sx={{ pl: 1, pr: 0 }}>
+              <ComboBox
+                selectedBreeds={selectedBreeds}
+                setSelectedBreeds={setSelectedBreeds}
+              />
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', py: 2 }}>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', py: 2 }}>
+            <Typography
+              id='track-slider'
+              variant='body2'
+              gutterBottom
+              sx={{ fontWeight: 400 }}
+            >
+              Select Age Range:
+            </Typography>
+            <Box sx={{ pl: 3, pr: 0 }}>
               <Typography
-                id='track-slider'
-                variant='body2'
+                id='track-slider-number'
+                variant='body1'
+                color='textPrimary'
                 gutterBottom
-                sx={{ fontWeight: 400 }}
               >
-                Select Age Range:
+                {ageMin} - {ageMax} years old
               </Typography>
-              <Box sx={{ pl: 3, pr: 0 }}>
-                <Typography
-                  id='track-slider-number'
-                  variant='body1'
-                  color='textPrimary'
-                  gutterBottom
-                >
-                  {ageMin} - {ageMax} years old
-                </Typography>
-                <Slider
-                  getAriaLabel={() => 'Dog Age Range'}
-                  value={ageRange}
-                  onChange={handleAgeRangeSlider}
-                  max={20}
-                  sx={{ maxWidth: 150 }}
-                  size='medium'
-                />
-              </Box>
+              <Slider
+                getAriaLabel={() => 'Dog Age Range'}
+                value={ageRange}
+                onChange={handleAgeRangeSlider}
+                max={20}
+                sx={{ maxWidth: 150 }}
+                size='medium'
+              />
             </Box>
           </Box>
         </Box>
-      </Container>
+      </Box>
     </>
   );
 };

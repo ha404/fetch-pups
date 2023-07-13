@@ -8,10 +8,13 @@ import { isAxiosError } from 'axios';
 import { fetchDogs } from '../services/dogApi';
 import DogCardsSection from '../components/ResultsSection/DogCardsSection';
 import ResultsToolbar from '../components/ResultsSection/ResultsToolBar';
+import SearchBar from '../components/Filter/SearchBarSection';
+import { useZipCodes } from '../context/ZipCodesContext';
 
 const Search: React.FC = () => {
   const { favorites, showFavorite, setShowFavorite } =
     useContext(FavoritesContext);
+  const { zipCodes } = useZipCodes();
 
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [page, setPage] = useState<number>(0);
@@ -25,7 +28,7 @@ const Search: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page, asc, selectedBreeds, ageRange, showFavorite]);
+  }, [page, asc, selectedBreeds, ageRange, showFavorite, zipCodes]);
 
   // Fetch dogs data from the API based on the current search criteria
   const fetchData = async () => {
@@ -36,7 +39,8 @@ const Search: React.FC = () => {
         asc,
         page,
         selectedBreeds,
-        ageRange as number[]
+        ageRange as number[],
+        zipCodes
       );
       setDogs(dogs);
       setTotalResults(totalResults);
@@ -81,8 +85,6 @@ const Search: React.FC = () => {
   return (
     <>
       <main>
-        {/* <Hero /> */}
-        {/* Search Section */}
         <Container
           maxWidth='lg'
           disableGutters
@@ -91,22 +93,32 @@ const Search: React.FC = () => {
             flexDirection: 'row',
           }}
         >
-          <FilterSection
-            asc={asc}
-            showComboBox={showFilter}
-            handleSort={toggleSortOrder}
-            toggleShowFilter={toggleShowFilter}
-            selectedBreeds={selectedBreeds}
-            setSelectedBreeds={setSelectedBreeds}
-            ageRange={ageRange}
-            handleAgeRangeSlider={handleAgeRangeSlider}
-            ageMin={ageMin}
-            ageMax={ageMax}
-          />
-
+          {/* Search Section */}
+          <Container
+            disableGutters
+            maxWidth={false}
+            sx={{
+              maxWidth: { xs: '80%', lg: '18rem' },
+              mr: { xs: 0, lg: 2 },
+            }}
+          >
+            <SearchBar />
+            <FilterSection
+              asc={asc}
+              showComboBox={showFilter}
+              handleSort={toggleSortOrder}
+              toggleShowFilter={toggleShowFilter}
+              selectedBreeds={selectedBreeds}
+              setSelectedBreeds={setSelectedBreeds}
+              ageRange={ageRange}
+              handleAgeRangeSlider={handleAgeRangeSlider}
+              ageMin={ageMin}
+              ageMax={ageMax}
+            />
+          </Container>
           {/* End Search Section */}
           {/* Results Section */}
-          <Container maxWidth='lg' sx={{ py: 1, my: 5 }}>
+          <Container disableGutters maxWidth='lg' sx={{ py: 1, px: 1, my: 5 }}>
             <ResultsToolbar
               favoritesCount={favoritesCount}
               showFavorite={showFavorite}
@@ -121,13 +133,13 @@ const Search: React.FC = () => {
               favorites={favorites}
             />
             {/*End Dog Cards Section*/}
-            {/* End Results Section */}
             <PaginationBar
               totalResults={totalResults}
               page={page}
               setPage={setPage}
             />
           </Container>
+          {/* End Results Section */}
         </Container>
       </main>
     </>

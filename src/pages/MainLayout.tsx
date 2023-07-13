@@ -7,6 +7,7 @@ import Match from './Match';
 import { FavoritesProvider } from '../context/FavoritesContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+import { ZipCodesProvider } from '../context/ZipCodesContext';
 
 const theme = createTheme({
   palette: {
@@ -20,18 +21,23 @@ const MainLayout: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <FavoritesProvider>
-        <NavBar />
-        <Container
-          disableGutters
-          maxWidth={false}
-          sx={{ bgcolor: theme.palette.background.default, minHeight: '100%' }}
-        >
-          <Routes>
-            <Route path='/search' element={<Search />} />
-            <Route path='/favorites' element={<Favorites />} />
-            <Route path='/match' element={<Match />} />
-          </Routes>
-        </Container>
+        <ZipCodesProvider>
+          <NavBar />
+          <Container
+            disableGutters
+            maxWidth={false}
+            sx={{
+              bgcolor: theme.palette.background.default,
+              minHeight: '100%',
+            }}
+          >
+            <Routes>
+              <Route path='/search' element={<Search />} />
+              <Route path='/favorites' element={<Favorites />} />
+              <Route path='/match' element={<Match />} />
+            </Routes>
+          </Container>
+        </ZipCodesProvider>
       </FavoritesProvider>
     </ThemeProvider>
   );

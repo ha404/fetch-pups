@@ -8,7 +8,8 @@ export const fetchDogs = async (
   asc: boolean,
   page: number,
   selectedBreeds: string[] | null,
-  ageRange: number[]
+  ageRange: number[],
+  zipCodes: string[]
 ) => {
   let dogIds: string[] = [];
   let totalResults: number = 0;
@@ -28,6 +29,7 @@ export const fetchDogs = async (
         breeds: selectedBreeds ? selectedBreeds : null,
         ageMin: ageRange[0],
         ageMax: ageRange[1],
+        zipCodes: zipCodes ? zipCodes : null,
       });
       totalResults = responseIds.data.total;
       dogIds = responseIds.data.resultIds;

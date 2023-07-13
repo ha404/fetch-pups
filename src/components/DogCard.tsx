@@ -40,6 +40,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
         margin: '0 auto 0',
         padding: '0, 0.5em',
         borderRadius: 1,
+        bgcolor: 'white',
       }}
     >
       <CardMedia

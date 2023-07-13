@@ -93,7 +93,11 @@ const Search: React.FC = () => {
         <Container
           maxWidth='lg'
           disableGutters
-          sx={{ display: 'flex', flexDirection: 'row', py: 10 }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            py: 10,
+          }}
         >
           <FilterSection
             asc={asc}
@@ -119,8 +123,9 @@ const Search: React.FC = () => {
                 py: 1,
                 pt: 0.5,
                 mb: 1,
-                bgcolor: '#F2F3F5',
+                bgcolor: '#dfe3e8',
                 borderRadius: 1,
+                ml: '0.2em',
               }}
             >
               <Grid item xs={9}>
@@ -138,8 +143,8 @@ const Search: React.FC = () => {
               <Grid item xs={3}>
                 <Typography
                   variant='subtitle1'
-                  align='center'
-                  sx={{ pt: 1, pb: 0 }}
+                  align='right'
+                  sx={{ pt: 1, pb: 0, pr: 2 }}
                   color='primary'
                 >
                   <b>{totalResults}</b> Results

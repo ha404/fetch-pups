@@ -2,8 +2,6 @@ import React from 'react';
 import { Box, Container, Grid } from '@mui/material';
 import Hero from '../components/Hero';
 import bg2 from '../assets/bg2.jpeg';
-import bg3 from '../assets/bg2.jpeg';
-import bg5 from '../assets/bg2.jpeg';
 
 const About: React.FC = () => {
   return (

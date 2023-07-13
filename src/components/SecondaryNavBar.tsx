@@ -1,7 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import LogoutIcon from '@mui/icons-material/Logout';
 
 const navButtons = [
   { name: 'About', path: '/about' },
@@ -16,7 +15,7 @@ const SecondaryNavBar: React.FC = () => {
     <AppBar position='sticky' component='nav'>
       <Toolbar
         variant='dense'
-        sx={{ justifyContent: 'space-evenly', bgcolor: 'whitesmoke' }}
+        sx={{ justifyContent: 'space-evenly', bgcolor: 'white' }}
       >
         {' '}
         {navButtons.map((button) => (

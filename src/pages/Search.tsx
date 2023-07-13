@@ -25,7 +25,7 @@ const Search: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [asc, setAsc] = useState<boolean>(true);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
-  const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [showFilter, setShowFilter] = useState<boolean>(true);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
@@ -96,7 +96,6 @@ const Search: React.FC = () => {
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            py: 10,
           }}
         >
           <FilterSection
@@ -114,7 +113,7 @@ const Search: React.FC = () => {
 
           {/* End Search Section */}
           {/* Results Section */}
-          <Container maxWidth='lg' sx={{ py: 1, my: 10 }}>
+          <Container maxWidth='lg' sx={{ py: 1, my: 5 }}>
             <Grid
               container
               spacing={1}

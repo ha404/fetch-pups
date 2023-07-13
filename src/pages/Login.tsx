@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Pets } from '@mui/icons-material';
 
 const defaultTheme = createTheme();
 
@@ -41,67 +42,110 @@ const Login = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component='main' maxWidth='xs'>
-        <CssBaseline />
+      <CssBaseline />
+      <Container
+        component='main'
+        maxWidth='xl'
+        sx={{
+          backgroundImage: `url(${require('../assets/bg1.jpeg')})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          paddingLeft: '2rem',
+          paddingRight: '2rem',
+        }}
+      >
         <Box
           sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            backgroundColor: 'white',
+            padding: '1rem',
+            ml: 15,
+            borderRadius: '0.5rem',
+            maxWidth: 370,
+            minHeight: 450,
+            boxShadow: defaultTheme.shadows[10],
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component='h1' variant='h5'>
-            Sign in
-          </Typography>
           <Box
-            component='form'
-            onSubmit={handleLogin}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              id='name'
-              label='Name'
-              name='name'
-              autoComplete='name'
-              autoFocus
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              id='email'
-              label='Email Address'
-              name='email'
-              autoComplete='email'
-              value={email}
-              error={!isValidEmail(email) && email !== ''}
-              helperText={
-                !isValidEmail(email) && email !== ''
-                  ? 'Invalid email format.'
-                  : ''
-              }
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              sx={{ mt: 3, mb: 2 }}
-              role='button'
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
             >
-              Sign In
-            </Button>
-            {error && <Typography color='error'>{error}</Typography>}
+              <Typography component='h1' variant='h6'>
+                Sign in to
+              </Typography>
+
+              <Typography
+                component='span'
+                variant='h5'
+                color='primary'
+                sx={{ fontWeight: 700 }}
+              >
+                <Pets />
+                FetchPups
+              </Typography>
+            </Box>
+            <Box
+              component='form'
+              onSubmit={handleLogin}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                id='name'
+                label='Name'
+                name='name'
+                autoComplete='name'
+                autoFocus
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
+                value={email}
+                error={!isValidEmail(email) && email !== ''}
+                helperText={
+                  !isValidEmail(email) && email !== ''
+                    ? 'Invalid email format.'
+                    : ''
+                }
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                sx={{ mt: 6, mb: 2 }}
+                role='button'
+              >
+                Sign In
+              </Button>
+              {error && <Typography color='error'>{error}</Typography>}
+            </Box>
           </Box>
         </Box>
       </Container>

@@ -21,28 +21,37 @@ const NavBar: React.FC = () => {
 
   return (
     <AppBar position='sticky' component='nav'>
-      <Toolbar>
-        <IconButton
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Button
+          variant='text'
           color='inherit'
-          edge='start'
-          onClick={handleLogoClick}
           aria-label='Return to search'
-          sx={{ pr: 0 }}
-        >
-          <Pets style={{ marginLeft: 5 }} />
-        </IconButton>
-        <Typography
-          component='span'
           onClick={handleLogoClick}
-          variant='h5'
-          flexGrow={1}
-          sx={{ fontWeight: 700 }}
+          sx={{ textTransform: 'none' }}
         >
-          FetchPups
-        </Typography>
-        <Button color='inherit' onClick={handleLogout}>
+          <Pets color='inherit' sx={{ pr: 0 }} />
+          <Typography
+            component='span'
+            variant='h5'
+            flexGrow={1}
+            sx={{ fontWeight: 700 }}
+          >
+            FetchPups
+          </Typography>
+        </Button>
+        <Button
+          variant='text'
+          color='inherit'
+          aria-label='Logout'
+          onClick={handleLogout}
+        >
           <LogoutIcon />
-          <Typography variant='body1' flexGrow={1} sx={{ fontWeight: 500 }}>
+          <Typography
+            component='span'
+            variant='body1'
+            flexGrow={1}
+            sx={{ fontWeight: 500 }}
+          >
             Logout
           </Typography>
         </Button>

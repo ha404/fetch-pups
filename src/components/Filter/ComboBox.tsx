@@ -19,7 +19,6 @@ const ComboBox: React.FC<ComboBoxProps> = ({
       id='combo-box'
       multiple
       options={allBreeds}
-      sx={{ width: 300 }}
       renderInput={(params) => (
         <TextField {...params} label='Filter by breeds' />
       )}

@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
         pb: 6,
       }}
     >
-      <Container maxWidth='md'>
+      <Container maxWidth='sm'>
         <Typography
           variant='h3'
           align='center'

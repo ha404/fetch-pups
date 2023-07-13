@@ -15,6 +15,7 @@ import { fetchDogs } from '../services/dogApi';
 import ClearFavoritesButton from '../components/Buttons/ClearFavoritesButton';
 import SearchButton from '../components/Buttons/SearchButton';
 import EmptyFavoritesAlert from '../components/EmptyFavoritesAlert';
+import DogCardsSection from '../components/DogCardsSection';
 
 const Search: React.FC = () => {
   const { favorites, showFavorite, setShowFavorite } =
@@ -152,23 +153,17 @@ const Search: React.FC = () => {
             </Grid>
             {error && <p>{error}</p>}
             {/* Dog Cards Section */}
-            <Grid container spacing={3}>
-              {favorites.length === 0 && showFavorite ? (
-                <EmptyFavoritesAlert />
-              ) : (
-                dogs.map((dog: Dog) => (
-                  <Grid item xs={12} sm={6} md={4} key={dog.id}>
-                    <DogCard dog={dog} />
-                  </Grid>
-                ))
-              )}
-            </Grid>
+            <DogCardsSection
+              dogs={dogs}
+              showFavorite={showFavorite}
+              favorites={favorites}
+            />
+            {/*End Dog Cards Section*/}
             <PaginationBar
               totalResults={totalResults}
               page={page}
               setPage={setPage}
             />
-            {/*End Dog Cards Section*/}
           </Container>
           {/* End Results Section */}
         </Container>

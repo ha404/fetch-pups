@@ -48,6 +48,15 @@ const FilterSection: React.FC<FilterProps> = ({
             flexDirection: 'column',
           }}
         >
+          <Typography
+            id='filter-title'
+            color='primary'
+            variant='h6'
+            gutterBottom
+            sx={{ fontWeight: 700 }}
+          >
+            Search By Filters
+          </Typography>
           <Grid container spacing={0} columns={16}>
             <Grid item xs={8}>
               <Button
@@ -84,15 +93,6 @@ const FilterSection: React.FC<FilterProps> = ({
             </Grid>
           </Grid>
           <Box display='flex' flexDirection='column' sx={{ py: 2 }}>
-            <Typography
-              id='filter-title'
-              color='primary'
-              variant='h6'
-              gutterBottom
-              sx={{ fontWeight: 700 }}
-            >
-              Filter by
-            </Typography>
             <Box
               sx={{
                 display: 'flex',

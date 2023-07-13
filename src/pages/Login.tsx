@@ -149,34 +149,69 @@ const Login = () => {
           backgroundPosition: 'center',
           minHeight: '100vh',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: matches ? 'center' : 'flex-start',
-          paddingLeft: matches ? '0' : '2rem',
-          paddingRight: matches ? '0' : '2rem',
+          justifyContent: 'flex-start',
+          padding: matches ? '0' : '2rem',
         }}
       >
-        {matches ? (
-          <>
-            <Button variant='contained' onClick={handleOpen}>
-              Sign In
-            </Button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby='modal-modal-title'
-              aria-describedby='modal-modal-description'
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Typography
+            variant='h3'
+            component='h1'
+            align='center'
+            color='white'
+            sx={{ marginTop: '3rem', fontWeight: 700 }}
+          >
+            Welcome to FetchPups
+          </Typography>
+
+          {matches ? (
+            <>
+              <Button
+                variant='contained'
+                onClick={handleOpen}
+                sx={{
+                  marginTop: '15rem',
+                }}
+              >
+                Sign In
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {LoginForm}
+              </Modal>
+            </>
+          ) : (
+            <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignSelf: 'flex-start',
+                marginTop: '5rem',
+                paddingLeft: '10%',
               }}
             >
               {LoginForm}
-            </Modal>
-          </>
-        ) : (
-          <Box sx={{ paddingLeft: '15%' }}>{LoginForm}</Box>
-        )}
+            </Box>
+          )}
+        </Box>
       </Container>
     </ThemeProvider>
   );

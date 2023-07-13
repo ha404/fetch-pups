@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-function useLocalStorage<T extends any[]>(
+function useLocalStorage<T>(
   key: string,
   initialValue: T
-): [T, React.Dispatch<React.SetStateAction<T>>, (value: string) => void] {
+): [T, (value: T | ((val: T) => T)) => void, () => void] {
   const readValue = (): T => {
     try {
       const item = window.localStorage.getItem(key);
@@ -16,7 +16,7 @@ function useLocalStorage<T extends any[]>(
 
   const [storedValue, setStoredValue] = useState<T>(readValue);
 
-  const setValue: React.Dispatch<React.SetStateAction<T>> = (value) => {
+  const setValue = (value: T | ((val: T) => T)) => {
     try {
       const newValue = value instanceof Function ? value(storedValue) : value;
       window.localStorage.setItem(key, JSON.stringify(newValue));
@@ -26,12 +26,10 @@ function useLocalStorage<T extends any[]>(
     }
   };
 
-  const removeItem = (value: string) => {
+  const removeItem = () => {
     try {
-      const updatedValues = storedValue.filter(
-        (val: any) => val !== value
-      ) as T;
-      setValue(updatedValues);
+      window.localStorage.removeItem(key);
+      setStoredValue(initialValue);
     } catch (error) {
       console.warn(`Error removing localStorage key "${key}":`, error);
     }

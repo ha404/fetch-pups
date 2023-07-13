@@ -1,8 +1,8 @@
 import React from 'react';
-import { Dog } from '../services/api';
+import { Dog } from '../../services/api';
 import { Grid } from '@mui/material';
-import DogCard from '../components/DogCard';
-import EmptyFavoritesAlert from '../components/EmptyFavoritesAlert';
+import DogCard from './DogCard';
+import EmptyFavoritesAlert from './EmptyFavoritesAlert';
 
 interface DogCardsSectionProps {
   dogs: Dog[];

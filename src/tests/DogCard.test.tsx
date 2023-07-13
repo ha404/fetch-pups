@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import DogCard from '../components/DogCard';
+import DogCard from '../components/ResultsSection/DogCard';
 import { FavoritesContext } from '../context/FavoritesContext';
 import { Dog } from '../services/api';
 

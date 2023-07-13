@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Dog } from '../services/api';
+import { Dog } from '../../services/api';
 import {
   Card,
   CardMedia,
@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Favorite } from '@mui/icons-material';
-import { FavoritesContext } from '../context/FavoritesContext';
+import { FavoritesContext } from '../../context/FavoritesContext';
 
 interface DogCardProps {
   dog: Dog;

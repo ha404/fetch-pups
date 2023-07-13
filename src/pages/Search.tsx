@@ -1,21 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
-import DogCard from '../components/DogCard';
 import { Dog } from '../services/api';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import { Box, Typography } from '@mui/material';
 import PaginationBar from '../components/PaginationBar';
-import Hero from '../components/Hero';
 import FilterSection from '../components/Filter/FilterSection';
-import MatchButton from '../components/Buttons/MatchButton';
-import FavoritesButton from '../components/Buttons/FavoriteButton';
 import { FavoritesContext } from '../context/FavoritesContext';
 import { isAxiosError } from 'axios';
 import { fetchDogs } from '../services/dogApi';
-import ClearFavoritesButton from '../components/Buttons/ClearFavoritesButton';
-import SearchButton from '../components/Buttons/SearchButton';
-import EmptyFavoritesAlert from '../components/EmptyFavoritesAlert';
-import DogCardsSection from '../components/DogCardsSection';
+import DogCardsSection from '../components/ResultsSection/DogCardsSection';
+import ResultsToolbar from '../components/ResultsSection/ResultsToolBar';
 
 const Search: React.FC = () => {
   const { favorites, showFavorite, setShowFavorite } =
@@ -115,42 +107,12 @@ const Search: React.FC = () => {
           {/* End Search Section */}
           {/* Results Section */}
           <Container maxWidth='lg' sx={{ py: 1, my: 5 }}>
-            <Grid
-              container
-              spacing={1}
-              justifyContent='space between'
-              sx={{
-                py: 1,
-                pt: 0.5,
-                mb: 1,
-                bgcolor: '#dfe3e8',
-                borderRadius: 1,
-                ml: '0.2em',
-              }}
-            >
-              <Grid item xs={9}>
-                <Container>
-                  <FavoritesButton
-                    favoritesCount={favoritesCount}
-                    showFavorite={showFavorite}
-                    toggleShowFavorite={toggleShowFavorites}
-                  />
-                  {showFavorite ? <ClearFavoritesButton /> : null}
-                  <MatchButton />
-                  {showFavorite ? <SearchButton /> : null}
-                </Container>
-              </Grid>
-              <Grid item xs={3}>
-                <Typography
-                  variant='subtitle1'
-                  align='right'
-                  sx={{ pt: 1, pb: 0, pr: 2 }}
-                  color='primary'
-                >
-                  <b>{totalResults}</b> Results
-                </Typography>
-              </Grid>
-            </Grid>
+            <ResultsToolbar
+              favoritesCount={favoritesCount}
+              showFavorite={showFavorite}
+              toggleShowFavorites={toggleShowFavorites}
+              totalResults={totalResults}
+            />
             {error && <p>{error}</p>}
             {/* Dog Cards Section */}
             <DogCardsSection
@@ -159,13 +121,13 @@ const Search: React.FC = () => {
               favorites={favorites}
             />
             {/*End Dog Cards Section*/}
+            {/* End Results Section */}
             <PaginationBar
               totalResults={totalResults}
               page={page}
               setPage={setPage}
             />
           </Container>
-          {/* End Results Section */}
         </Container>
       </main>
     </>

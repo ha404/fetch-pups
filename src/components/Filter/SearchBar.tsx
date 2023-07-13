@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
@@ -41,15 +41,16 @@ const SearchBar: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const { zipCodes, setZipCodes, removeZipCode } = useZipCodes();
 
+  useEffect(() => {
+    // Only add the value to zip codes when it's exactly 5 numeric characters
+    if (/^\d{5}$/.test(inputValue)) {
+      setZipCodes((prevZipCodes) => [...prevZipCodes, inputValue]);
+      setInputValue('');
+    }
+  }, [inputValue, setZipCodes]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
-  };
-
-  const handleSearchClick = () => {
-    const zipArray = inputValue.split(',');
-    console.log(zipArray);
-    setZipCodes(zipArray);
-    setInputValue('');
   };
 
   const handleZipCodeClick = (zipCode: string) => {
@@ -74,7 +75,7 @@ const SearchBar: React.FC = () => {
           />
           <SearchIconWrapper>
             <IconButton
-              onClick={handleSearchClick}
+              onClick={() => {}}
               style={{ position: 'absolute', right: '0' }}
             >
               <SearchIcon />

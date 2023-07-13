@@ -36,7 +36,17 @@ const FilterSection: React.FC<FilterProps> = ({
 }) => {
   return (
     <>
-      <Box sx={{ py: 1, pl: 0, bgcolor: 'FDFEFF', alignItems: 'left' }}>
+      <Box
+        sx={{
+          py: 1,
+          pr: 0,
+          my: 10,
+          bgcolor: 'FDFEFF',
+          alignItems: 'left',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <Grid container spacing={0} columns={16}>
           <Grid item xs={8}>
             <Button
@@ -66,19 +76,17 @@ const FilterSection: React.FC<FilterProps> = ({
                 border: 0.2,
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
-                borderLeft: 0,
               }}
             >
-              SORT BY BREED
+              SORT
             </Button>
           </Grid>
         </Grid>
-
-        <Typography id='track-slider' variant='h6' gutterBottom>
-          Filter by
-        </Typography>
-        <Grid container spacing={3} columns={16}>
-          <Grid item xs={8}>
+        <Box display='flex' flexDirection='column'>
+          <Typography id='track-slider' variant='h6' gutterBottom>
+            Filter by
+          </Typography>
+          <Box>
             <Typography id='track-breeds' gutterBottom>
               Select Dog Breed(s)
             </Typography>
@@ -86,22 +94,20 @@ const FilterSection: React.FC<FilterProps> = ({
               selectedBreeds={selectedBreeds}
               setSelectedBreeds={setSelectedBreeds}
             />
-          </Grid>
-          <Grid item xs={6}>
-            <Typography id='track-slider' gutterBottom>
-              Select Age Range:{' '}
-              <i>
-                {ageMin} - {ageMax} years old
-              </i>
-            </Typography>
-            <Slider
-              getAriaLabel={() => 'Dog Age Range'}
-              value={ageRange}
-              onChange={handleAgeRangeSlider}
-              max={20}
-            />
-          </Grid>
-        </Grid>
+          </Box>
+          <Typography id='track-slider' gutterBottom>
+            Select Age Range:{' '}
+            <i>
+              {ageMin} - {ageMax} years old
+            </i>
+          </Typography>
+          <Slider
+            getAriaLabel={() => 'Dog Age Range'}
+            value={ageRange}
+            onChange={handleAgeRangeSlider}
+            max={20}
+          />
+        </Box>
       </Box>
     </>
   );

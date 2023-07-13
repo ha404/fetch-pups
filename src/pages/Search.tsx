@@ -90,7 +90,11 @@ const Search: React.FC = () => {
       <main>
         {/* <Hero /> */}
         {/* Search Section */}
-        <Container maxWidth='lg' sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Container
+          maxWidth='lg'
+          disableGutters
+          sx={{ display: 'flex', flexDirection: 'row', py: 10 }}
+        >
           <FilterSection
             asc={asc}
             showComboBox={showFilter}

@@ -88,15 +88,9 @@ const Search: React.FC = () => {
   return (
     <>
       <main>
-        <Hero />
+        {/* <Hero /> */}
         {/* Search Section */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pb: 2,
-            mb: 4,
-          }}
-        >
+        <Container maxWidth='lg' sx={{ display: 'flex', flexDirection: 'row' }}>
           <FilterSection
             asc={asc}
             showComboBox={showFilter}
@@ -109,60 +103,67 @@ const Search: React.FC = () => {
             ageMin={ageMin}
             ageMax={ageMax}
           />
-        </Box>
-        {/* End Search Section */}
-        {/* Results Section */}
-        <Container maxWidth='md' sx={{ py: 1 }}>
-          <Grid
-            container
-            spacing={1}
-            justifyContent='space between'
-            sx={{ py: 1, pt: 0.5, mb: 1, bgcolor: '#F2F3F5', borderRadius: 1 }}
-          >
-            <Grid item xs={9}>
-              <Container>
-                <FavoritesButton
-                  favoritesCount={favoritesCount}
-                  showFavorite={showFavorite}
-                  toggleShowFavorite={toggleShowFavorites}
-                />
-                {showFavorite ? <ClearFavoritesButton /> : null}
-                <MatchButton />
-                {showFavorite ? <SearchButton /> : null}
-              </Container>
+
+          {/* End Search Section */}
+          {/* Results Section */}
+          <Container maxWidth='lg' sx={{ py: 1, my: 10 }}>
+            <Grid
+              container
+              spacing={1}
+              justifyContent='space between'
+              sx={{
+                py: 1,
+                pt: 0.5,
+                mb: 1,
+                bgcolor: '#F2F3F5',
+                borderRadius: 1,
+              }}
+            >
+              <Grid item xs={9}>
+                <Container>
+                  <FavoritesButton
+                    favoritesCount={favoritesCount}
+                    showFavorite={showFavorite}
+                    toggleShowFavorite={toggleShowFavorites}
+                  />
+                  {showFavorite ? <ClearFavoritesButton /> : null}
+                  <MatchButton />
+                  {showFavorite ? <SearchButton /> : null}
+                </Container>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography
+                  variant='subtitle1'
+                  align='center'
+                  sx={{ pt: 1, pb: 0 }}
+                  color='primary'
+                >
+                  <b>{totalResults}</b> Results
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={3}>
-              <Typography
-                variant='subtitle1'
-                align='center'
-                sx={{ pt: 1, pb: 0, pl: 5 }}
-                color='primary'
-              >
-                <b>{totalResults}</b> Results
-              </Typography>
+            {error && <p>{error}</p>}
+            {/* Dog Cards Section */}
+            <Grid container spacing={3}>
+              {favorites.length === 0 && showFavorite ? (
+                <EmptyFavoritesAlert />
+              ) : (
+                dogs.map((dog: Dog) => (
+                  <Grid item xs={12} sm={6} md={4} key={dog.id}>
+                    <DogCard dog={dog} />
+                  </Grid>
+                ))
+              )}
             </Grid>
-          </Grid>
-          {error && <p>{error}</p>}
-          {/* Dog Cards Section */}
-          <Grid container spacing={3}>
-            {favorites.length === 0 && showFavorite ? (
-              <EmptyFavoritesAlert />
-            ) : (
-              dogs.map((dog: Dog) => (
-                <Grid item xs={12} sm={6} md={4} key={dog.id}>
-                  <DogCard dog={dog} />
-                </Grid>
-              ))
-            )}
-          </Grid>
-          {/*End Dog Cards Section*/}
+            <PaginationBar
+              totalResults={totalResults}
+              page={page}
+              setPage={setPage}
+            />
+            {/*End Dog Cards Section*/}
+          </Container>
+          {/* End Results Section */}
         </Container>
-        {/* End Results Section */}
-        <PaginationBar
-          totalResults={totalResults}
-          page={page}
-          setPage={setPage}
-        />
       </main>
     </>
   );

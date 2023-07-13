@@ -38,7 +38,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
         maxWidth: 280,
         minWidth: 268,
         margin: '0 auto 0',
-        padding: '0 0.1em',
+        padding: '0, 0.5em',
         borderRadius: 1,
       }}
     >

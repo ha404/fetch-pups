@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import TuneIcon from '@mui/icons-material/Tune';
 import ComboBox from './ComboBox';
+import { Box } from '@mui/material';
 
 interface FilterProps {
   asc: boolean;
@@ -34,85 +35,75 @@ const FilterSection: React.FC<FilterProps> = ({
   ageMax,
 }) => {
   return (
-    <Container maxWidth='md' sx={{ py: 1, bgcolor: 'FDFEFF' }}>
-      <Grid container spacing={0} columns={16}>
-        <Grid item xs={8}>
-          <Button
-            variant={showComboBox ? 'contained' : 'outlined'}
-            color='primary'
-            startIcon={<TuneIcon />}
-            fullWidth
-            onClick={toggleShowFilter}
-            sx={{
-              border: 0.2,
-              borderTopRightRadius: 0,
-              borderBottomRightRadius: 0,
-              borderRight: 0.1,
-            }}
-          >
-            FILTER
-          </Button>
-        </Grid>
-        <Grid item xs={8}>
-          <Button
-            variant='outlined'
-            color='primary'
-            startIcon={asc ? <ArrowUpward /> : <ArrowDownward />}
-            fullWidth
-            onClick={handleSort}
-            sx={{
-              border: 0.2,
-              borderTopLeftRadius: 0,
-              borderBottomLeftRadius: 0,
-              borderLeft: 0,
-            }}
-          >
-            SORT BY BREED
-          </Button>
-        </Grid>
-      </Grid>
-      {showComboBox && (
-        <Container
-          maxWidth='md'
-          sx={{
-            mt: 3,
-            py: 1.5,
-            border: 0.2,
-            borderRadius: 1,
-            boxShadow: 1,
-          }}
-        >
-          <Typography id='track-slider' variant='h6' gutterBottom>
-            Filter by
-          </Typography>
-          <Grid container spacing={3} columns={16}>
-            <Grid item xs={8}>
-              <Typography id='track-breeds' gutterBottom>
-                Select Dog Breed(s)
-              </Typography>
-              <ComboBox
-                selectedBreeds={selectedBreeds}
-                setSelectedBreeds={setSelectedBreeds}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Typography id='track-slider' gutterBottom>
-                Select Age Range:{' '}
-                <i>
-                  {ageMin} - {ageMax} years old
-                </i>
-              </Typography>
-              <Slider
-                getAriaLabel={() => 'Dog Age Range'}
-                value={ageRange}
-                onChange={handleAgeRangeSlider}
-                max={20}
-              />
-            </Grid>
+    <>
+      <Box sx={{ py: 1, pl: 0, bgcolor: 'FDFEFF', alignItems: 'left' }}>
+        <Grid container spacing={0} columns={16}>
+          <Grid item xs={8}>
+            <Button
+              variant={showComboBox ? 'contained' : 'outlined'}
+              color='primary'
+              startIcon={<TuneIcon />}
+              fullWidth
+              // onClick={toggleShowFilter}
+              sx={{
+                border: 0.2,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+                borderRight: 0.1,
+              }}
+            >
+              FILTER
+            </Button>
           </Grid>
-        </Container>
-      )}
-    </Container>
+          <Grid item xs={8}>
+            <Button
+              variant='outlined'
+              color='primary'
+              startIcon={asc ? <ArrowUpward /> : <ArrowDownward />}
+              fullWidth
+              onClick={handleSort}
+              sx={{
+                border: 0.2,
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderLeft: 0,
+              }}
+            >
+              SORT BY BREED
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Typography id='track-slider' variant='h6' gutterBottom>
+          Filter by
+        </Typography>
+        <Grid container spacing={3} columns={16}>
+          <Grid item xs={8}>
+            <Typography id='track-breeds' gutterBottom>
+              Select Dog Breed(s)
+            </Typography>
+            <ComboBox
+              selectedBreeds={selectedBreeds}
+              setSelectedBreeds={setSelectedBreeds}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography id='track-slider' gutterBottom>
+              Select Age Range:{' '}
+              <i>
+                {ageMin} - {ageMax} years old
+              </i>
+            </Typography>
+            <Slider
+              getAriaLabel={() => 'Dog Age Range'}
+              value={ageRange}
+              onChange={handleAgeRangeSlider}
+              max={20}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+    </>
   );
 };
 

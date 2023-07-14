@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { ZipCodesProvider } from '../context/ZipCodesContext';
 import About from './About';
+import DogCareTips from './DogCareTips';
 
 const theme = createTheme({
   palette: {
@@ -37,6 +38,7 @@ const MainLayout: React.FC = () => {
               <Route path='/search' element={<Search />} />
               <Route path='/favorites' element={<Favorites />} />
               <Route path='/match' element={<Match />} />
+              <Route path='/tips' element={<DogCareTips />} />
             </Routes>
           </Container>
         </ZipCodesProvider>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { CssBaseline } from '@mui/material';
 
@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CssBaseline />
-    <Router basename='/fetch-pups'>
+    <Router>
       <App />
     </Router>
   </React.StrictMode>

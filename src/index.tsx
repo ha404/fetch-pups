@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CssBaseline />
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router basename='/fetch-pups'>
       <App />
     </Router>
   </React.StrictMode>

@@ -2,7 +2,7 @@
   "name": "fetch-pups",
   "version": "0.1.0",
   "private": false,
-  "homepage": "http://Skydodle.github.io/",
+  "homepage": "https://Skydodle.github.io/fetch-pups",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@emotion/react": "^11.11.1",

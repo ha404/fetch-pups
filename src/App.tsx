@@ -6,8 +6,9 @@ import MainLayout from './pages/MainLayout';
 const App: React.FC = () => {
   return (
     <Routes>
+      <Route path='/' element={<MainLayout />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/*' element={<MainLayout />} />
+      <Route path='*' element={<Login />} />
     </Routes>
   );
 };

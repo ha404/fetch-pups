@@ -13,6 +13,7 @@ const Hero: React.FC = () => {
         bgcolor: 'background.paper',
         pt: 10,
         pb: 6,
+        pl: 0,
         height: '100%',
       }}
     >

@@ -41,7 +41,7 @@ const Login = () => {
     }
     try {
       await APIService.authenticate({ name, email });
-      navigate('/search');
+      navigate('/about');
     } catch (err) {
       setError('An error occurred during login. Please try again.');
       console.error('Login Failed:', err);

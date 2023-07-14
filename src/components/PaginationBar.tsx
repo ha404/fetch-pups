@@ -1,6 +1,17 @@
 import React from 'react';
-import { Stack, Container } from '@mui/material';
+import { Stack, Container, styled } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
+
+const StyledPagination = styled(Pagination)(({ theme }) => ({
+  '& button': {
+    '&:hover': {
+      backgroundColor: '#1e7dd9',
+      color: 'white',
+      border: 'none',
+      fontWeight: theme.typography.fontWeightBold,
+    },
+  },
+}));
 
 interface PaginationBarProps {
   totalResults: number;
@@ -16,7 +27,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
   return (
     <Container maxWidth='md' sx={{ my: 5, justifyContent: 'center' }}>
       <Stack spacing={2} direction='row' justifyContent='center'>
-        <Pagination
+        <StyledPagination
           count={Math.ceil(totalResults / 9)}
           page={page}
           size='large'

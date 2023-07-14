@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Pets } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
-import APIService from '../services/api';
+import APIService from '../../services/api';
+import SecondaryNavBar from './SecondaryNavBar';
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
@@ -50,12 +51,13 @@ const NavBar: React.FC = () => {
             component='span'
             variant='body1'
             flexGrow={1}
-            sx={{ fontWeight: 500 }}
+            sx={{ fontWeight: 700 }}
           >
             Logout
           </Typography>
         </Button>
-      </Toolbar>
+      </Toolbar>{' '}
+      <SecondaryNavBar />
     </AppBar>
   );
 };

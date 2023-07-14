@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import APIService from '../services/api';
 import { Dog } from '../services/api';
 import { Box, CircularProgress, Typography, Grid } from '@mui/material';
-import DogCard from '../components/DogCard';
+import DogCard from '../components/ResultsSection/DogCard';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
 import { useLocation } from 'react-router-dom';

@@ -86,6 +86,5 @@ describe('Login', () => {
       name: 'John Doe',
       email: 'john@doe.com',
     });
-    // You can also add assertions to check if the navigation happens after successful authentication
   });
 });

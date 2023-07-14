@@ -1,38 +1,34 @@
 import React, { useEffect, useState, useContext } from 'react';
-import DogCard from '../components/DogCard';
 import { Dog } from '../services/api';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import { Box, Typography } from '@mui/material';
 import PaginationBar from '../components/PaginationBar';
-import Hero from '../components/Hero';
 import FilterSection from '../components/Filter/FilterSection';
-import MatchButton from '../components/Buttons/MatchButton';
-import FavoritesButton from '../components/Buttons/FavoriteButton';
 import { FavoritesContext } from '../context/FavoritesContext';
 import { isAxiosError } from 'axios';
 import { fetchDogs } from '../services/dogApi';
-import ClearFavoritesButton from '../components/Buttons/ClearFavoritesButton';
-import SearchButton from '../components/Buttons/SearchButton';
-import EmptyFavoritesAlert from '../components/EmptyFavoritesAlert';
+import DogCardsSection from '../components/ResultsSection/DogCardsSection';
+import ResultsToolbar from '../components/ResultsSection/ResultsToolBar';
+import SearchBar from '../components/Filter/SearchBarSection';
+import { useZipCodes } from '../context/ZipCodesContext';
 
 const Search: React.FC = () => {
   const { favorites, showFavorite, setShowFavorite } =
     useContext(FavoritesContext);
+  const { zipCodes } = useZipCodes();
 
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [page, setPage] = useState<number>(0);
   const [error, setError] = useState<string>('');
   const [asc, setAsc] = useState<boolean>(true);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
-  const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [showFilter, setShowFilter] = useState<boolean>(true);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [ageRange, setAgeRange] = useState<number | number[]>([0, 20]);
   const [ageMin, ageMax] = ageRange as [number, number];
 
   useEffect(() => {
     fetchData();
-  }, [page, asc, selectedBreeds, ageRange, showFavorite]);
+  }, [page, asc, selectedBreeds, ageRange, showFavorite, zipCodes]);
 
   // Fetch dogs data from the API based on the current search criteria
   const fetchData = async () => {
@@ -43,7 +39,8 @@ const Search: React.FC = () => {
         asc,
         page,
         selectedBreeds,
-        ageRange as number[]
+        ageRange as number[],
+        zipCodes
       );
       setDogs(dogs);
       setTotalResults(totalResults);
@@ -88,79 +85,59 @@ const Search: React.FC = () => {
   return (
     <>
       <main>
-        {/* <Hero /> */}
-        {/* Search Section */}
-        <Container maxWidth='lg' sx={{ display: 'flex', flexDirection: 'row' }}>
-          <FilterSection
-            asc={asc}
-            showComboBox={showFilter}
-            handleSort={toggleSortOrder}
-            toggleShowFilter={toggleShowFilter}
-            selectedBreeds={selectedBreeds}
-            setSelectedBreeds={setSelectedBreeds}
-            ageRange={ageRange}
-            handleAgeRangeSlider={handleAgeRangeSlider}
-            ageMin={ageMin}
-            ageMax={ageMax}
-          />
-
+        <Container
+          maxWidth='lg'
+          disableGutters
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          {/* Search Section */}
+          <Container
+            disableGutters
+            maxWidth={false}
+            sx={{
+              maxWidth: { xs: '80%', lg: '18rem' },
+              mr: { xs: 0, lg: 2 },
+            }}
+          >
+            <SearchBar />
+            <FilterSection
+              asc={asc}
+              showComboBox={showFilter}
+              handleSort={toggleSortOrder}
+              toggleShowFilter={toggleShowFilter}
+              selectedBreeds={selectedBreeds}
+              setSelectedBreeds={setSelectedBreeds}
+              ageRange={ageRange}
+              handleAgeRangeSlider={handleAgeRangeSlider}
+              ageMin={ageMin}
+              ageMax={ageMax}
+            />
+          </Container>
           {/* End Search Section */}
           {/* Results Section */}
-          <Container maxWidth='lg' sx={{ py: 1, my: 10 }}>
-            <Grid
-              container
-              spacing={1}
-              justifyContent='space between'
-              sx={{
-                py: 1,
-                pt: 0.5,
-                mb: 1,
-                bgcolor: '#F2F3F5',
-                borderRadius: 1,
-              }}
-            >
-              <Grid item xs={9}>
-                <Container>
-                  <FavoritesButton
-                    favoritesCount={favoritesCount}
-                    showFavorite={showFavorite}
-                    toggleShowFavorite={toggleShowFavorites}
-                  />
-                  {showFavorite ? <ClearFavoritesButton /> : null}
-                  <MatchButton />
-                  {showFavorite ? <SearchButton /> : null}
-                </Container>
-              </Grid>
-              <Grid item xs={3}>
-                <Typography
-                  variant='subtitle1'
-                  align='center'
-                  sx={{ pt: 1, pb: 0 }}
-                  color='primary'
-                >
-                  <b>{totalResults}</b> Results
-                </Typography>
-              </Grid>
-            </Grid>
+          <Container disableGutters maxWidth='lg' sx={{ py: 1, px: 1, my: 5 }}>
+            <ResultsToolbar
+              favoritesCount={favoritesCount}
+              showFavorite={showFavorite}
+              toggleShowFavorites={toggleShowFavorites}
+              totalResults={totalResults}
+            />
             {error && <p>{error}</p>}
             {/* Dog Cards Section */}
-            <Grid container spacing={3}>
-              {favorites.length === 0 && showFavorite ? (
-                <EmptyFavoritesAlert />
-              ) : (
-                dogs.map((dog: Dog) => (
-                  <Grid item xs={12} sm={6} md={4} key={dog.id}>
-                    <DogCard dog={dog} />
-                  </Grid>
-                ))
-              )}
-            </Grid>
+            <DogCardsSection
+              dogs={dogs}
+              showFavorite={showFavorite}
+              favorites={favorites}
+            />
+            {/*End Dog Cards Section*/}
             <PaginationBar
               totalResults={totalResults}
               page={page}
               setPage={setPage}
             />
-            {/*End Dog Cards Section*/}
           </Container>
           {/* End Results Section */}
         </Container>

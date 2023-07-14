@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Dog } from '../services/api';
+import React, { useContext } from 'react';
+import { Dog } from '../../services/api';
 import {
   Card,
   CardMedia,
@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Favorite } from '@mui/icons-material';
-import { FavoritesContext } from '../context/FavoritesContext';
+import { FavoritesContext } from '../../context/FavoritesContext';
 
 interface DogCardProps {
   dog: Dog;
@@ -35,11 +35,13 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
     <Card
       raised
       sx={{
-        maxWidth: 280,
+        maxWidth: 275,
         minWidth: 268,
         margin: '0 auto 0',
         padding: '0, 0.5em',
-        borderRadius: 1,
+        borderRadius: 2,
+        bgcolor: 'white',
+        maxHeight: 390,
       }}
     >
       <CardMedia
@@ -84,9 +86,9 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
               onClick={handleFavoriteIconButtonClick}
             >
               {isFavorite ? (
-                <Favorite color='error' />
+                <Favorite color='error' fontSize='medium' />
               ) : (
-                <FavoriteBorderIcon color='error' />
+                <FavoriteBorderIcon color='error' fontSize='medium' />
               )}
             </IconButton>
           </CardActions>

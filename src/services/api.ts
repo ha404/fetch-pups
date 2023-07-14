@@ -25,6 +25,7 @@ interface QueryParams {
   breeds?: string[] | null;
   ageMin?: number;
   ageMax?: number;
+  zipCodes?: string[] | null;
 }
 
 // Define the Search interface

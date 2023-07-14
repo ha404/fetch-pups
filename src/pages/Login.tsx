@@ -11,14 +11,22 @@ import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Pets } from '@mui/icons-material';
+import useLocalStorage from '../hooks/useLocalStorage';
+import Modal from '@mui/material/Modal';
+import { useMediaQuery } from '@mui/material';
 
 const defaultTheme = createTheme();
 
 const Login = () => {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [name, setName] = useLocalStorage('name', '');
+  const [email, setEmail] = useLocalStorage('email', '');
   const [error, setError] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const matches = useMediaQuery('(max-width:600px)');
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const isValidEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -33,12 +41,101 @@ const Login = () => {
     }
     try {
       await APIService.authenticate({ name, email });
-      navigate('/search');
+      navigate('/about');
     } catch (err) {
       setError('An error occurred during login. Please try again.');
       console.error('Login Failed:', err);
     }
   };
+
+  const LoginForm = (
+    <Box
+      sx={{
+        backgroundColor: 'white',
+        padding: '1rem',
+        borderRadius: '0.5rem',
+        boxShadow: defaultTheme.shadows[10],
+        maxWidth: 370,
+        minHeight: 450,
+        p: 2,
+        m: 'auto',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component='h1' variant='h6'>
+            Sign in to
+          </Typography>
+
+          <Typography
+            component='span'
+            variant='h5'
+            color='primary'
+            sx={{ fontWeight: 700 }}
+          >
+            <Pets />
+            FetchPups
+          </Typography>
+        </Box>
+        <Box component='form' onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            id='name'
+            label='Name'
+            name='name'
+            autoComplete='name'
+            autoFocus
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            id='email'
+            label='Email Address'
+            name='email'
+            autoComplete='email'
+            value={email}
+            error={!isValidEmail(email) && email !== ''}
+            helperText={
+              !isValidEmail(email) && email !== ''
+                ? 'Invalid email format.'
+                : ''
+            }
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{ mt: 6, mb: 2 }}
+            role='button'
+          >
+            Sign In
+          </Button>
+          {error && <Typography color='error'>{error}</Typography>}
+        </Box>
+      </Box>
+    </Box>
+  );
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -52,101 +149,68 @@ const Login = () => {
           backgroundPosition: 'center',
           minHeight: '100vh',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          paddingLeft: '2rem',
-          paddingRight: '2rem',
+          padding: matches ? '0' : '2rem',
         }}
       >
         <Box
           sx={{
-            backgroundColor: 'white',
-            padding: '1rem',
-            ml: 15,
-            borderRadius: '0.5rem',
-            maxWidth: 370,
-            minHeight: 450,
-            boxShadow: defaultTheme.shadows[10],
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            justifyContent: 'flex-start',
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+          <Typography
+            variant='h3'
+            component='h1'
+            align='center'
+            color='white'
+            sx={{ marginTop: '3rem', fontWeight: 700 }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Typography component='h1' variant='h6'>
-                Sign in to
-              </Typography>
+            Welcome to FetchPups
+          </Typography>
 
-              <Typography
-                component='span'
-                variant='h5'
-                color='primary'
-                sx={{ fontWeight: 700 }}
-              >
-                <Pets />
-                FetchPups
-              </Typography>
-            </Box>
-            <Box
-              component='form'
-              onSubmit={handleLogin}
-              noValidate
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='name'
-                label='Name'
-                name='name'
-                autoComplete='name'
-                autoFocus
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
-                value={email}
-                error={!isValidEmail(email) && email !== ''}
-                helperText={
-                  !isValidEmail(email) && email !== ''
-                    ? 'Invalid email format.'
-                    : ''
-                }
-                onChange={(e) => setEmail(e.target.value)}
-              />
+          {matches ? (
+            <>
               <Button
-                type='submit'
-                fullWidth
                 variant='contained'
-                sx={{ mt: 6, mb: 2 }}
-                role='button'
+                onClick={handleOpen}
+                sx={{
+                  marginTop: '15rem',
+                }}
               >
                 Sign In
               </Button>
-              {error && <Typography color='error'>{error}</Typography>}
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {LoginForm}
+              </Modal>
+            </>
+          ) : (
+            <Box
+              sx={{
+                alignSelf: 'flex-start',
+                marginTop: '5rem',
+                paddingLeft: '10%',
+              }}
+            >
+              {LoginForm}
             </Box>
-          </Box>
+          )}
         </Box>
       </Container>
     </ThemeProvider>

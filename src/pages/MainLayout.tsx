@@ -1,8 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/Navigation/NavBar';
 import Search from './Search';
-import Favorites from '../components/Favorites';
 import Match from './Match';
 import { FavoritesProvider } from '../context/FavoritesContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -36,7 +35,6 @@ const MainLayout: React.FC = () => {
             <Routes>
               <Route path='/about' element={<About />} />
               <Route path='/search' element={<Search />} />
-              <Route path='/favorites' element={<Favorites />} />
               <Route path='/match' element={<Match />} />
               <Route path='/tips' element={<DogCareTips />} />
             </Routes>

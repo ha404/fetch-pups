@@ -1,6 +1,6 @@
 // ZipCodesContext.tsx
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 interface ZipCodesContextData {

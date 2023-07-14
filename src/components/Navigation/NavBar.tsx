@@ -1,9 +1,9 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Pets } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
-import APIService from '../services/api';
+import APIService from '../../services/api';
 import SecondaryNavBar from './SecondaryNavBar';
 
 const NavBar: React.FC = () => {

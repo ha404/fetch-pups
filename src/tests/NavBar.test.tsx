@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/Navigation/NavBar';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 // Create a mock navigate function

@@ -13,7 +13,6 @@ import tips3 from '../assets/tips3.jpeg';
 import tips4 from '../assets/tips4.jpeg';
 
 const DogCareTips: React.FC = () => {
-  // An array of tip items with image, caption and link for each item
   const tips = [
     {
       image: tips1,

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "https://skydodle.github.io/fetch-pups/static/css/main.e6c13ad2.css",
-    "main.js": "https://skydodle.github.io/fetch-pups/static/js/main.0c900f47.js",
+    "main.js": "https://skydodle.github.io/fetch-pups/static/js/main.5571bf46.js",
     "static/js/787.376da782.chunk.js": "https://skydodle.github.io/fetch-pups/static/js/787.376da782.chunk.js",
     "static/media/bg2.jpeg": "https://skydodle.github.io/fetch-pups/static/media/bg2.eb6fd9a9334d7bb41c03.jpeg",
     "static/media/bg1.jpeg": "https://skydodle.github.io/fetch-pups/static/media/bg1.d70a095f8f3b38c795f5.jpeg",
@@ -12,11 +12,11 @@
     "static/media/tips2.jpeg": "https://skydodle.github.io/fetch-pups/static/media/tips2.6c7b00fc19583d9a5fee.jpeg",
     "index.html": "https://skydodle.github.io/fetch-pups/index.html",
     "main.e6c13ad2.css.map": "https://skydodle.github.io/fetch-pups/static/css/main.e6c13ad2.css.map",
-    "main.0c900f47.js.map": "https://skydodle.github.io/fetch-pups/static/js/main.0c900f47.js.map",
+    "main.5571bf46.js.map": "https://skydodle.github.io/fetch-pups/static/js/main.5571bf46.js.map",
     "787.376da782.chunk.js.map": "https://skydodle.github.io/fetch-pups/static/js/787.376da782.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.0c900f47.js"
+    "static/js/main.5571bf46.js"
   ]
 }

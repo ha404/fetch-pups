@@ -10,7 +10,7 @@
     "@fontsource/roboto": "^5.0.5",
     "@mui/icons-material": "^5.13.7",
     "@mui/joy": "^5.0.0-alpha.86",
-    "@mui/material": "^5.13.7",
+    "@mui/material": "^5.15.20",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
